@@ -7,9 +7,49 @@
 </head>
 <body>
 
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Directions service</title>
+   
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>	
-<script scr="js/main.js"></script>
+  </style>
+  
+  </head>
+
+  <body>
+
+    <div id="floating-panel">
+    </div>
+    <div id="right-panel"></div>
+    <div id="map"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzcJI4y_AZB3EqHRxoWJ6V6LEdSrJAXLE&signed_in=true&callback=initMap"async defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>

@@ -7,7 +7,7 @@ app.weatherKey = 'e4190875c1187be4';
 app.weatherURL = 'http://api.wunderground.com/api/' + app.weatherKey + '/conditions/q/' + app.latitude + ',' + app.longitude + '.json';
 app.getWeather = function(){
 	$.ajax ({
-		url: 'http://api.wunderground.com/api/' + app.weatherKey + '/conditions/q/' + app.latitude + ',' + app.longitude + '.json',
+		url: app.weatherURL,
 		method: 'GET',
 		dataType: 'json'
 

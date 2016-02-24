@@ -6,6 +6,29 @@
 	<link rel="stylesheet" href="styles/main.css">
 	<!-- <link rel="stylesheet" href="main.css"> -->
 	<link href='https://fonts.googleapis.com/css?family=Roboto:700,400|Open+Sans:400,300italic' rel='stylesheet' type='text/css'>
+	<style>	
+		html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+	</style>
 </head>
 <body>
 
@@ -13,9 +36,14 @@
     </div>
     <div id="right-panel"></div>
     <div id="map"></div>
+	<form action="">
+		<input type="text" id="start">
+		<input type="text" id="end">
+		<input type="submit">
+	</form>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzcJI4y_AZB3EqHRxoWJ6V6LEdSrJAXLE&signed_in=true&callback=initMap"async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
-<script src="js/main.js"></script>
+<script src="dev/script/main.js"></script>
 </body>
 </html>

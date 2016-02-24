@@ -1,7 +1,7 @@
 /////////////////////////
 /////////TTC API/////////
 /////////////////////////
-appTTC = {};
+var appTTC = {};
 
 $(function(){
 	appTTC.init();
@@ -54,3 +54,13 @@ app.getWeather = function(){
         console.log(info);
     });
 }
+
+
+app.init = function(){
+	app.getWeather();
+}
+
+$(function(){
+ app.init();
+});
+

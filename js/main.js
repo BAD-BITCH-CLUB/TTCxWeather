@@ -1,3 +1,8 @@
+///////////////////////////////////////
+/////////GOOGLE DIRECTIONS API/////////
+//////////////////////////////////////
+
+
 var map;
 
 function initMap() {
@@ -9,7 +14,7 @@ function initMap() {
   });
 }
 
-directionsDisplay.setPanel(document.getElementById('right-panel'));
+// directionsDisplay.setPanel(document.getElementById('right-panel'));
 
 function moveToLocation(lat, lng){
 	var center= new google.maps.LatLng(lat, lng);
@@ -93,11 +98,11 @@ app.getWeather = function(){
     });
 }
 
-<<<<<<< Updated upstream
-=======
+//Updated upstream
+
 app.getWeather();
 
->>>>>>> Stashed changes
+//Stashed changes
 
 app.init = function(){
 	

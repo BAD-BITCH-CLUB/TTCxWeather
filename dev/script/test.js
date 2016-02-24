@@ -1,4 +1,4 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzcJI4y_AZB3EqHRxoWJ6V6LEdSrJAXLE&signed_in=true&callback=initMap"async defer></script>
+
 var map;
 
 var userStart = prompt('What is the address of your location?');

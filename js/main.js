@@ -93,10 +93,19 @@ app.getWeather = function(){
     });
 }
 
+<<<<<<< Updated upstream
+=======
+app.getWeather();
+
+>>>>>>> Stashed changes
 
 app.init = function(){
-	app.getWeather();
+	
 }
+
+
+
+
 
 $(function(){
  app.init();

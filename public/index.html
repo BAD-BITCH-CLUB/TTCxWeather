@@ -6,54 +6,13 @@
 	<link rel="stylesheet" href="styles/style.css">
 	<!-- <link rel="stylesheet" href="main.css"> -->
 	<link href='https://fonts.googleapis.com/css?family=Roboto:700,400|Open+Sans:400,300italic' rel='stylesheet' type='text/css'>
-	<style>	
-		html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-/*
-img {
-  width: 100%;
-}
-
-div.image {
-  width: 60px;
-}*/
-
-
-	</style>
 </head>
 <body>
 
-<!-- 
-<div class="fixedWhiteBox">
-  <div class="skyline">
-    <div class="smBuildings image"><img src="../assets/svgs/smallBuildings.svg" alt=""></div>
-    <div class="lgBuildings image"><img src="../assets/svgs/bigBuildings.svg" alt=""></div>
-    <div class="cnTower image"><img src="../assets/svgs/cnTower.svg" alt=""></div>
-  </div>
 
-  <div class="transparentFrame">
     
 
-    <div class="logo image"><img src="../assets/svgs/logo.svg" class="logo" alt=""></div>
+<!--     <div class="logo image"><img src="../assets/svgs/logo.svg" class="logo" alt=""></div>
     <h2>Where <span>are you</span>Going</h2>
     <form id="destination" action="">
       <input type="text" id="end" placeholder="DESTINATION">
@@ -78,16 +37,24 @@ div.image {
       </button>
     </div> -->
 
+
 <h1> TTC OR WEATHER</h1>
-    <div id="floating-panel">
-    </div>
-    <div id="right-panel"></div>
-    <div id="map"></div>
+<h2>Where <span>are you</span>Going</h2>
+<div class="skyline">
+    <div class="smBuildings image"><img src="assets/svgs/smallBuildings.svg" alt=""></div>
+    <div class="lgBuildings image"><img src="assets/svgs/bigBuildings.svg" alt=""></div>
+     <div class="cntower image"><img src="assets/svgs/cnTower.svg" alt=""></div>
+  </div>
+  <h1>Walk <span>or</span> TTC</h1>
   <form action="">
-    <input type="text" id="start">
     <input type="text" id="end">
     <input type="submit">
   </form>
+  <div id="floating-panel">
+    </div>
+    <div id="right-panel"></div>
+    <div id="map"></div>
+
 
   </div>
 </div>
@@ -99,6 +66,6 @@ div.image {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzcJI4y_AZB3EqHRxoWJ6V6LEdSrJAXLE&signed_in=true&callback=initMap"async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-<script src="script/main.js"></script>
+<script src="scripts/main.js"></script>
 </body>
 </html>

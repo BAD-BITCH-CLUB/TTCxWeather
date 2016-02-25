@@ -5,17 +5,15 @@ app.init = function(){
 	app.getGeolocation();
 	$('form').on('submit', function(e) {
 		e.preventDefault();
-		app.start = $('input#start').val();
+		app.start = app.userLocation;
 		app.end = $('input#end').val();
 		app.initMap();
 	})
 };
 
-// app.start = '';
-// app.end = '';
-// var x = '';
-// var y = '';
-
+app.userLocation = '';
+app.x = '';
+app.y= '';
 /////////////////////////
 /////////TTC API/////////
 /////////////////////////
@@ -24,15 +22,17 @@ app.getGeolocation = function(){
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 
-			var x = position.coords.latitude;
-			var y = position.coords.longitude;
+			app.x = position.coords.latitude;
+			app.y = position.coords.longitude;
+			app.userLocation = app.x + ', ' + app.y;
 
 			$.ajax({
-				url: 'http://myttc.ca/near/' + x + ',' + y + '.json',
+				url: 'http://myttc.ca/near/' + app.x + ',' + app.y + '.json',
 				method: 'GET',
 				dataType: 'jsonp',
 			}).then(function(TTCinfo){
 				console.log(TTCinfo.locations);
+				console.log(app.userLocation)
 			});
 		});
 		//if geolocation isn't available or the user doesn't accept 

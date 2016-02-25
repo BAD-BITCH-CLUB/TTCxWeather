@@ -1,30 +1,31 @@
+'use strict';
+
 var app = {};
 
-
-$(function(){
- app.init();
+$(function () {
+	app.init();
 });
-app.init = function(){
+app.init = function () {
 	app.getGeolocation();
-	$('form').on('submit', function(e) {
+	$('form').on('submit', function (e) {
 		e.preventDefault();
 		app.start = app.userLocation;
 		app.end = $('input#end').val();
 		app.initMap();
-	})
+	});
 };
 
 app.userLocation = '';
 app.x = '';
-app.y= '';
+app.y = '';
 
 /////////////////////////
 /////////TTC API/////////
 /////////////////////////
-app.getGeolocation = function(){
+app.getGeolocation = function () {
 	//if geolocation is available, store longitude and latitutde co-ordinates to put into TTC Ajax call
 	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
+		navigator.geolocation.getCurrentPosition(function (position) {
 
 			app.x = position.coords.latitude;
 			app.y = position.coords.longitude;
@@ -33,41 +34,39 @@ app.getGeolocation = function(){
 			$.ajax({
 				url: 'http://myttc.ca/near/' + app.x + ',' + app.y + '.json',
 				method: 'GET',
-				dataType: 'jsonp',
-			}).then(function(TTCinfo){
+				dataType: 'jsonp'
+			}).then(function (TTCinfo) {
 				console.log(TTCinfo.locations);
 				// console.log(app.userLocation);
 				// console.log(TTCinfo.locations[0].uri)
 			});
 		});
-		//if geolocation isn't available or the user doesn't accept 
-		} else {
+		//if geolocation isn't available or the user doesn't accept
+	} else {
 			console.log('Nope!');
-	};
+		};
 };
-
 
 //////////////////////////
 ////////GOOGLE MAPS///////
 //////////////////////////
-app.initMap = function() {
-  var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 17,
-    center: { lat: app.x, lng: app.y},
-  });
+app.initMap = function () {
+	var directionsService = new google.maps.DirectionsService();
+	var directionsDisplay = new google.maps.DirectionsRenderer();
+	var map = new google.maps.Map(document.getElementById('map'), {
+		zoom: 17,
+		center: { lat: app.x, lng: app.y }
+	});
 
-  directionsDisplay.setMap(map);
-    directionsDisplay.setPanel(document.getElementById('right-panel'));
+	directionsDisplay.setMap(map);
+	directionsDisplay.setPanel(document.getElementById('right-panel'));
 
-    var control = document.getElementById('floating-panel');
-    control.style.display = 'block';
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+	var control = document.getElementById('floating-panel');
+	control.style.display = 'block';
+	map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 
 	app.calculateAndDisplayRoute(directionsService, directionsDisplay);
-
-}
+};
 
 // directionsDisplay.setPanel(document.getElementById('right-panel'));
 
@@ -80,48 +79,44 @@ app.initMap = function() {
 // 	lat: 43.660821,
 // 	lng: -79.403821
 // }
-// origin: new google.maps.LatLng({lat: -34, lng: 151}), 
-// 		destination: new google.maps.LatLng({lat: -32, lng: 149}), 
+// origin: new google.maps.LatLng({lat: -34, lng: 151}),
+// 		destination: new google.maps.LatLng({lat: -32, lng: 149}),
 
 // app.userEnd = prompt('What is the address of where you want to go?');
 
-app.calculateAndDisplayRoute = function(directionsService, directionsDisplay){
+app.calculateAndDisplayRoute = function (directionsService, directionsDisplay) {
 	directionsService.route({
 		origin: app.start,
 		destination: app.end,
 		travelMode: google.maps.TravelMode.WALKING
-	}, function(response, status) {
+	}, function (response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
-		  directionsDisplay.setDirections(response);
+			directionsDisplay.setDirections(response);
 		} else {
-		  window.alert('Directions request failed due to ' + status);
+			window.alert('Directions request failed due to ' + status);
 		}
 	});
-}
-
-
-
+};
 
 ////////////////////////
 ///////WUNDERGROUND/////
 ////////////////////////
-
 
 app.latitude = 43.7000;
 app.longitude = -79.4000;
 
 app.weatherKey = 'e4190875c1187be4';
 app.weatherURL = 'http://api.wunderground.com/api/' + app.weatherKey + '/conditions/q/' + app.latitude + ',' + app.longitude + '.json';
-app.getWeather = function(){
-    $.ajax ({
-        url: app.weatherURL,
-        method: 'GET',
-        dataType: 'json'
+app.getWeather = function () {
+	$.ajax({
+		url: app.weatherURL,
+		method: 'GET',
+		dataType: 'json'
 
-    }).then(function(info){
-        console.log(info);
-    });
-}
+	}).then(function (info) {
+		console.log(info);
+	});
+};
 
 // Updated upstream
 
@@ -129,14 +124,13 @@ app.getWeather();
 
 // Stashed changes
 
-
 /////////////////////PSUEDO CODE/////////////////////
 
 // Collect user's starting location using geolocation
 
 // Display the current weather conditions
 
-// Change the css of the logo icon to correspond with the weather conditions  
+// Change the css of the logo icon to correspond with the weather conditions 
 
 // Collect the user's desired destination
 
@@ -146,10 +140,8 @@ app.getWeather();
 
 // from what the user selects (walking or ttc) store selected travel mode in a variable to be passed through google for the route map (conditional statements)
 
-// WALKING - display a route map with detailed directions getting them from a - b 
+// WALKING - display a route map with detailed directions getting them from a - b
 
-// TTC - display a route map 
+// TTC - display a route map
 
 // Give the user the option to change their mind and view directions/ route of the other travel mode
-
- 

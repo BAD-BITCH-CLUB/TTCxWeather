@@ -1,6 +1,9 @@
 var app = {};
 
 
+$(function(){
+ app.init();
+});
 app.init = function(){
 	app.getGeolocation();
 	$('form').on('submit', function(e) {
@@ -51,7 +54,7 @@ app.initMap = function() {
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 17,
-    center: { lat: 41.85, lng: -87.65},
+    center: { lat: app.x, lng: app.y},
   });
 
   directionsDisplay.setMap(map);
@@ -127,9 +130,6 @@ app.getWeather();
 
 
 
-$(function(){
- app.init();
-});
 
 
  

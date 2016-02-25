@@ -28,16 +28,32 @@
         line-height: 30px;
         padding-left: 10px;
       }
+
+img {
+  width: 100%;
+}
+
+div.image {
+  width: 60px;
+}
+
+
 	</style>
 </head>
 <body>
 
 
 <div class="fixedWhiteBox">
+  <div class="skyline">
+    <div class="smBuildings image"><img src="../assets/svgs/smallBuildings.svg" alt=""></div>
+    <div class="lgBuildings image"><img src="../assets/svgs/bigBuildings.svg" alt=""></div>
+    <div class="cnTower image"><img src="../assets/svgs/cnTower.svg" alt=""></div>
+  </div>
+
   <div class="transparentFrame">
     
 
-    <img src="assets/svgs/logo.svg" class="logo" alt="">
+    <div class="logo image"><img src="../assets/svgs/logo.svg" class="logo" alt=""></div>
     <h2>Where <span>are you</span>Going</h2>
     <form id="destination" action="">
       <input type="text" id="end" placeholder="DESTINATION">
@@ -47,16 +63,16 @@
 
 
     <div class="dynamicContent">
-      <img src="" class="weatherlogo" alt="">
+      <div class="weatherLogo image"><img src="../assets/svgs/sun.svg" class="weatherlogo" alt=""></div>
       <h2 class="temperature">2oC</h2>
       <h3 class="weather">Rainy</h3>
       <button class="walk">
-        <img src="" class="walkImg" alt="">
+        <div class="walkImg image"><img src="../assets/svgs/walk.svg" class="walkImg" alt=""></div>
         <h4>WALK</h4>
         <h4>30 mins</h4>
       </button>
       <button class="ttc">
-        <img src="" class="TTCImg" alt="">
+        <div class="streetCarImg image"><img src="../assets/svgs/streetcar.svg" class="TTCImg" alt=""></div>
         <h4>TTC</h4>
         <h4>25 mins</h4>
       </button>

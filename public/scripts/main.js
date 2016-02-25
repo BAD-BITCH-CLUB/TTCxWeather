@@ -4,6 +4,7 @@ var app = {};
 
 $(function () {
 	app.init();
+	$('#end').val('121 Major Street, Toronto');
 });
 app.init = function () {
 	app.getGeolocation();
@@ -36,15 +37,39 @@ app.getGeolocation = function () {
 				method: 'GET',
 				dataType: 'jsonp'
 			}).then(function (TTCinfo) {
-				console.log(TTCinfo.locations);
+				// console.log(TTCinfo.locations);
 				// console.log(app.userLocation);
-				// console.log(TTCinfo.locations[0].uri)
+				// console.log(TTCinfo.locations[0].uri);
+				// app.TTCinfo = TTCinfo.locations[0].uri;
+				app.getTimeforTTC(TTCinfo.locations[0].uri);
+				console.log(TTCinfo.locations[0].uri);
 			});
 		});
 		//if geolocation isn't available or the user doesn't accept
 	} else {
 			console.log('Nope!');
 		};
+};
+
+app.getTimeforTTC = function (newTTCinfo) {
+	var TTCVehicleURL = 'http://myttc.ca/vehicles/near/' + newTTCinfo + '.json';
+	console.log(TTCVehicleURL);
+	$.ajax({
+		url: TTCVehicleURL,
+		method: 'GET',
+		dataType: 'jsonp'
+	}).then(function (vehicleInfo) {
+		console.log(vehicleInfo);
+	});
+};
+
+var item = $('table.adp-directions tr:nth-child(2) td div')[0];
+$(item).find('span:last-child').text();
+
+app.getTrain = function (v) {
+	var item = $('table.adp-directions tr:nth-child(2) td div')[0];
+	var pizza = $(item).find('span:last-child').text();
+	console.log(pizza);
 };
 
 //////////////////////////
@@ -88,10 +113,21 @@ app.calculateAndDisplayRoute = function (directionsService, directionsDisplay) {
 	directionsService.route({
 		origin: app.start,
 		destination: app.end,
-		travelMode: google.maps.TravelMode.WALKING
+		travelMode: google.maps.TravelMode.TRANSIT
 	}, function (response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
 			directionsDisplay.setDirections(response);
+			//Call setInterval, store it in a var
+			// it will return an id that we need to clear
+			var interval = setInterval(function () {
+				//If selector gets something
+				if ($('.adp-directions').length > 0) {
+					//Clear the interval
+					clearInterval(interval);
+					//get train
+					app.getTrain();
+				}
+			}, 100);
 		} else {
 			window.alert('Directions request failed due to ' + status);
 		}

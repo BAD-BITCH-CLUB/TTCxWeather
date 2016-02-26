@@ -79,7 +79,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .skyline {
 	position: absolute;
-	bottom: -3%;
+	bottom: -1%;
 	width: 100%;
 }
 
@@ -98,17 +98,53 @@ h1, h2, h3, h4, h5, h6, p {
 	h2 {
 		font-size: 4rem;
 	}
+	h3 {
+	    padding: 40px 30px;
+	}
 
+}
+input[type=text] {
+	border: $grey 2px solid;
+	padding: 20px 40px;
+	width: 315px;
+	color: $grey;
+	border-radius: 5px;
+	&:focus, &:active{
+		border: black 2px solid;
+		outline: none;
+	}
+	&::placeholder {
+		color:$teal;
+		letter-spacing: 12px;
+		text-align: center;
+	}
+	&:-webkit-autofill{
+		background-color: white !important;
+	}
+
+}
+
+
+
+
+input[type=submit]{
+	display: none;
 }
 img {
   width: 100%;
   color: $grey;
+  z-index: -1;
+}
+
+form {
+	z-index: 1;
+	position: relative;
 }
 
 .logo {
 	width: 60px;
 	padding: 14px 0px 20px;
-	color: $orange;
+	color: 
 	svg {
 		fill: currentColor;
 	}

@@ -5,9 +5,8 @@ var app = {};
 app.closeStreetCar = '';
 app.goodPizza = '';
 app.userLocation = '';
-app.x = 43.6482172;
-app.y = -79.39789979999999;
-app.vehicleInfo = [];
+app.x = 0;
+app.y = 0;
 app.longNames = [];
 
 $(function () {
@@ -25,7 +24,6 @@ app.init = function () {
 		app.end = $('input#end').val();
 		app.initMap();
 		app.calculateAndDisplayRoute(app.directionsService, app.directionsDisplay);
-		app.getNearestTTCTime();
 	});
 };
 
@@ -61,29 +59,24 @@ app.getGeolocation = function () {
 		};
 };
 
-app.getNearestTTCTime = function () {
-	// app.bestTrain();
-	app.vehicleInfo.forEach(function (val, i) {
-		console.log();
-	});
-};
-
 app.getTimeforTTC = function (newTTCinfo) {
-
 	var TTCVehicleURL = 'http://myttc.ca/vehicles/near/' + newTTCinfo + '.json';
 	console.log(TTCVehicleURL);
 	$.ajax({
 		url: TTCVehicleURL,
 		method: 'GET',
 		dataType: 'jsonp'
-	}).then(function (vehicleInfo) {
-		vehicleInfo.vehicles.forEach(function (val, i) {
-			app.vehicleInfo.push(val);
+	}).then(function (vehicleData) {
+		var vehicleInfo = [];
+		vehicleData.vehicles.forEach(function (val, i) {
+			vehicleInfo.push(val);
 		});
+		// console.log(vehicleInfo)
+		app.trainData = vehicleInfo;
 	});
 };
 
-app.getTrain = function (v) {
+app.getTrain = function () {
 
 	var item = $('table.adp-directions tr:nth-child(2) td div')[0];
 	var pizza = $(item).find('span:last-child').text();
@@ -92,28 +85,48 @@ app.getTrain = function (v) {
 		var splitPizza = pizza.split('- ');
 		app.goodPizza = splitPizza[1];
 	}
-
-	for (var i = 0; i < app.longNames.length; i++) {
-		if (app.longNames[i] == app.goodPizza) {
-			console.log("this is the streetcar we want " + app.longNames[i]);
-			app.closeStreetCar = app.longNames[i];
-		}
-	}
+	app.bestTrain();
+	// for (var i = 0; i < app.longNames.length; i++) {
+	// 	if (app.longNames[i] == app.goodPizza) {
+	// 		console.log("this is the streetcar we want " + app.longNames[i]);
+	// 		app.closeStreetCar = app.longNames[i];
+	// 	}
+	// }
 };
 
 app.bestTrain = function () {
-	app.vehicleInfo.forEach(function (val, i) {
+	app.trainData.forEach(function (val, i) {
 		var preLongName = val.long_name;
+		var velocity = val.velocity;
+		var distance = val.distance;
 		var split = preLongName.split('To');
 		var finalLongName = split.join('Towards');
-		app.longNames.push(finalLongName);
+		var vehicleObject = {
+			name: finalLongName,
+			velo: velocity,
+			dist: distance
+		};
+
+		// console.log(vehicleObject);
+
+		app.longNames.push(vehicleObject);
 	});
-	app.getTrain();
+	app.longNames.forEach(function (val, i) {
+
+		if (val.name === app.goodPizza) {
+			app.userTrain(app.longNames[i]);
+		}
+	});
+};
+
+app.userTrain = function (theTrain) {
+	console.log(theTrain);
 };
 
 //////////////////////////
 ////////GOOGLE MAPS///////
 //////////////////////////
+
 app.initMap = function () {
 	app.directionsService = new google.maps.DirectionsService();
 	app.directionsDisplay = new google.maps.DirectionsRenderer();

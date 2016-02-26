@@ -13,6 +13,7 @@ app.init = function () {
 		app.start = app.userLocation;
 		app.end = $('input#end').val();
 		app.initMap();
+		app.bestTrain();
 	});
 };
 
@@ -59,17 +60,39 @@ app.getTimeforTTC = function (newTTCinfo) {
 		method: 'GET',
 		dataType: 'jsonp'
 	}).then(function (vehicleInfo) {
-		console.log(vehicleInfo);
+		app.bestTrain(vehicleInfo);
 	});
 };
 
-var item = $('table.adp-directions tr:nth-child(2) td div')[0];
-$(item).find('span:last-child').text();
-
+var goodPizza = '';
 app.getTrain = function (v) {
 	var item = $('table.adp-directions tr:nth-child(2) td div')[0];
 	var pizza = $(item).find('span:last-child').text();
 	console.log(pizza);
+
+	var splitPizza = pizza.split('- ');
+	goodPizza = splitPizza[1];
+	console.log(goodPizza);
+};
+
+var longNames = [];
+
+app.bestTrain = function (info) {
+	console.log(info.vehicles);
+	for (var i = 0; i < info.vehicles.length; i++) {
+		console.log(info.vehicles[i].long_name);
+		var preLongName = info.vehicles[i].long_name;
+
+		var split = preLongName.split('To');
+		var finalLongName = split.join('Towards');
+		console.log(finalLongName);
+
+		if (finalLongName == goodPizza) {
+			longNames.push(finalLongName);
+			console.log(longNames);
+		}
+	}
+	console.log(longNames);
 };
 
 //////////////////////////
@@ -92,22 +115,6 @@ app.initMap = function () {
 
 	app.calculateAndDisplayRoute(directionsService, directionsDisplay);
 };
-
-// directionsDisplay.setPanel(document.getElementById('right-panel'));
-
-// var startPoint = {
-// 	lat: 43.648325,
-// 	lng: -79.397893
-// }
-
-// var endPoint = {
-// 	lat: 43.660821,
-// 	lng: -79.403821
-// }
-// origin: new google.maps.LatLng({lat: -34, lng: 151}),
-// 		destination: new google.maps.LatLng({lat: -32, lng: 149}),
-
-// app.userEnd = prompt('What is the address of where you want to go?');
 
 app.calculateAndDisplayRoute = function (directionsService, directionsDisplay) {
 	directionsService.route({

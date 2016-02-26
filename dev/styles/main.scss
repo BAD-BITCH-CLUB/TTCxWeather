@@ -18,34 +18,114 @@ $orange: RGB(250, 115, 85);
 $title: 'Roboto', sans-serif;
 $paragraph: 'Open Sans', sans-serif; 
 
-
-
-	html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-
-img {
-  width: 100%;
+html {
+	font-size: 62.5%;
 }
 
-div.image {
-  width: 60px;
+body {
+	font-size: 1.6rem;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	color: $grey;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	padding: 0;
+	margin: 0;
+}
+
+#map {
+	height: 100%;
+}
+
+// div.image {
+//   width: 60px;
+// }
+
+#floating-panel {
+	position: absolute;
+	top: 10px;
+	left: 25%;
+	z-index: 5;
+	background-color: #fff;
+	padding: 5px;
+	border: 1px solid #999;
+	text-align: center;
+	font-family: 'Roboto','sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
+}
+
+.dynamicContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.window {
+	border: 5px solid $grey;
+	border-radius: 10px;	
+	height: 94vh;
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+	background: $white;
+	position: relative;
+}
+
+.skyline {
+	position: absolute;
+	bottom: -3%;
+	width: 100%;
+}
+
+.title {
+	padding: 10px 0px 40px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.subTitle {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 30px 0px 40px;
+	h2 {
+		font-size: 4rem;
+	}
+
+}
+img {
+  width: 100%;
+  color: $grey;
+}
+
+.logo {
+	width: 60px;
+	padding: 14px 0px 20px;
+	color: $orange;
+	svg {
+		fill: currentColor;
+	}
+}
+
+h1 {
+	font-family: $title;
+}
+
+h2 {
+	text-transform: uppercase;
+	font-family: $title;
+	font-weight: 300;
+	line-height: 0.7;
+}
+
+h3 {
+	color: $orange;
+
 }

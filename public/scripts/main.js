@@ -2,29 +2,38 @@
 
 var app = {};
 
+app.closeStreetCar = '';
+app.goodPizza = '';
+app.userLocation = '';
+app.x = 43.6482172;
+app.y = -79.39789979999999;
+app.vehicleInfo = [];
+app.longNames = [];
+
 $(function () {
 	app.init();
 	$('#end').val('121 Major Street, Toronto');
 });
+
 app.init = function () {
 	app.getGeolocation();
+
 	$('form').on('submit', function (e) {
 		e.preventDefault();
+		console.log('yolo');
 		app.start = app.userLocation;
 		app.end = $('input#end').val();
 		app.initMap();
-		app.bestTrain();
+		app.calculateAndDisplayRoute(app.directionsService, app.directionsDisplay);
+		app.getNearestTTCTime();
 	});
 };
-
-app.userLocation = '';
-app.x = '';
-app.y = '';
 
 /////////////////////////
 /////////TTC API/////////
 /////////////////////////
 app.getGeolocation = function () {
+
 	//if geolocation is available, store longitude and latitutde co-ordinates to put into TTC Ajax call
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function (position) {
@@ -43,7 +52,7 @@ app.getGeolocation = function () {
 				// console.log(TTCinfo.locations[0].uri);
 				// app.TTCinfo = TTCinfo.locations[0].uri;
 				app.getTimeforTTC(TTCinfo.locations[0].uri);
-				console.log(TTCinfo.locations[0].uri);
+				// console.log(TTCinfo.locations[0].uri);
 			});
 		});
 		//if geolocation isn't available or the user doesn't accept
@@ -52,7 +61,15 @@ app.getGeolocation = function () {
 		};
 };
 
+app.getNearestTTCTime = function () {
+	// app.bestTrain();
+	app.vehicleInfo.forEach(function (val, i) {
+		console.log();
+	});
+};
+
 app.getTimeforTTC = function (newTTCinfo) {
+
 	var TTCVehicleURL = 'http://myttc.ca/vehicles/near/' + newTTCinfo + '.json';
 	console.log(TTCVehicleURL);
 	$.ajax({
@@ -60,70 +77,67 @@ app.getTimeforTTC = function (newTTCinfo) {
 		method: 'GET',
 		dataType: 'jsonp'
 	}).then(function (vehicleInfo) {
-		app.bestTrain(vehicleInfo);
+		vehicleInfo.vehicles.forEach(function (val, i) {
+			app.vehicleInfo.push(val);
+		});
 	});
 };
 
-var goodPizza = '';
 app.getTrain = function (v) {
+
 	var item = $('table.adp-directions tr:nth-child(2) td div')[0];
 	var pizza = $(item).find('span:last-child').text();
-	console.log(pizza);
 
-	var splitPizza = pizza.split('- ');
-	goodPizza = splitPizza[1];
-	console.log(goodPizza);
-};
+	if (pizza.length > 0) {
+		var splitPizza = pizza.split('- ');
+		app.goodPizza = splitPizza[1];
+	}
 
-var longNames = [];
-
-app.bestTrain = function (info) {
-	console.log(info.vehicles);
-	for (var i = 0; i < info.vehicles.length; i++) {
-		console.log(info.vehicles[i].long_name);
-		var preLongName = info.vehicles[i].long_name;
-
-		var split = preLongName.split('To');
-		var finalLongName = split.join('Towards');
-		console.log(finalLongName);
-
-		if (finalLongName == goodPizza) {
-			longNames.push(finalLongName);
-			console.log(longNames);
+	for (var i = 0; i < app.longNames.length; i++) {
+		if (app.longNames[i] == app.goodPizza) {
+			console.log("this is the streetcar we want " + app.longNames[i]);
+			app.closeStreetCar = app.longNames[i];
 		}
 	}
-	console.log(longNames);
+};
+
+app.bestTrain = function () {
+	app.vehicleInfo.forEach(function (val, i) {
+		var preLongName = val.long_name;
+		var split = preLongName.split('To');
+		var finalLongName = split.join('Towards');
+		app.longNames.push(finalLongName);
+	});
+	app.getTrain();
 };
 
 //////////////////////////
 ////////GOOGLE MAPS///////
 //////////////////////////
 app.initMap = function () {
-	var directionsService = new google.maps.DirectionsService();
-	var directionsDisplay = new google.maps.DirectionsRenderer();
+	app.directionsService = new google.maps.DirectionsService();
+	app.directionsDisplay = new google.maps.DirectionsRenderer();
 	var map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 17,
 		center: { lat: app.x, lng: app.y }
 	});
 
-	directionsDisplay.setMap(map);
-	directionsDisplay.setPanel(document.getElementById('right-panel'));
+	app.directionsDisplay.setMap(map);
+	app.directionsDisplay.setPanel(document.getElementById('right-panel'));
 
 	var control = document.getElementById('floating-panel');
-	control.style.display = 'block';
+	// control.style.display = 'block';
 	map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-
-	app.calculateAndDisplayRoute(directionsService, directionsDisplay);
 };
 
-app.calculateAndDisplayRoute = function (directionsService, directionsDisplay) {
-	directionsService.route({
+app.calculateAndDisplayRoute = function () {
+	app.directionsService.route({
 		origin: app.start,
 		destination: app.end,
 		travelMode: google.maps.TravelMode.TRANSIT
 	}, function (response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
-			directionsDisplay.setDirections(response);
+			app.directionsDisplay.setDirections(response);
 			//Call setInterval, store it in a var
 			// it will return an id that we need to clear
 			var interval = setInterval(function () {
@@ -157,7 +171,7 @@ app.getWeather = function () {
 		dataType: 'json'
 
 	}).then(function (info) {
-		console.log(info);
+		// console.log(info);
 	});
 };
 
@@ -188,3 +202,4 @@ app.getWeather();
 // TTC - display a route map
 
 // Give the user the option to change their mind and view directions/ route of the other travel mode
+//# sourceMappingURL=main.js.map

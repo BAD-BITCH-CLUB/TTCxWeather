@@ -12,50 +12,62 @@
 
     
 
-<!--     <div class="logo image"><img src="../assets/svgs/logo.svg" class="logo" alt=""></div>
-    <h2>Where <span>are you</span>Going</h2>
-    <form id="destination" action="">
-      <input type="text" id="end" placeholder="DESTINATION">
-      <input type="submit">
-    </form>
-    <h1>Walk <span>or</span> TTC</h1>
-
-
-    <div class="dynamicContent">
-      <div class="weatherLogo image"><img src="../assets/svgs/sun.svg" class="weatherlogo" alt=""></div>
-      <h2 class="temperature">2oC</h2>
-      <h3 class="weather">Rainy</h3>
-      <button class="walk">
-        <div class="walkImg image"><img src="../assets/svgs/walk.svg" class="walkImg" alt=""></div>
-        <h4>WALK</h4>
-        <h4>30 mins</h4>
-      </button>
-      <button class="ttc">
-        <div class="streetCarImg image"><img src="../assets/svgs/streetcar.svg" class="TTCImg" alt=""></div>
-        <h4>TTC</h4>
-        <h4>25 mins</h4>
-      </button>
-    </div> -->
-
-
 
 <div class="window clearfix">
-   <div class="dynamicContent">
-      <div class="logo"><img src="assets/svgs/logo.svg" alt=""></div>
+  <div class="dynamicContent">
+    <div class="logo">
+      <img src="assets/svgs/logo.svg" alt="">
+    </div>
     <div class="title">
-      <h2>Where<h2>
+      <h2>Where</h2>
       <h3>are you</h3> 
       <h2>Going</h2>
     </div>  
-      <form action="">
-        <input type="text" id="end" placeholder="DESTINATION">
-        <input type="submit">
-      </form>
-  <div class="subTitle">
-      <h2>Walk</h2> <h3>or</h3> <h2>TTC</h2>
+    <form action="">
+      <input type="text" id="end" placeholder="DESTINATION">
+      <input type="submit">
+    </form>
+    <div class="subTitle">
+      <h2>Walk</h2> 
+      <h3>or</h3> 
+      <h2>TTC</h2>
+    </div>
   </div>
-   </div>
-  <div class="skyline image"><img src="assets/skyline.svg" alt=""></div>
+  <div class="skyline">
+    <img src="assets/skyline.svg" alt="">
+  </div>
+</div>
+
+
+
+<div class="laterContent">
+  <div class="weatherIcon">
+    <div class="sun image">
+      <img src="assets/svgs/sun.svg" alt="">
+    </div>
+    <div class="partSun image">
+      <img src="assets/svgs/partlySunny.svg" alt="">
+    </div>
+    <div class="rain image">
+      <img src="assets/svgs/rain.svg" alt="">
+    </div>
+    <div class="snow image">
+      <img src="assets/svgs/snow.svg" alt="">
+    </div>
+    <div class="cloud image">
+      <img src="assets/svgs/cloud.svg" alt="">
+    </div>
+  </div>
+  <button class="walk">
+    <div class="walkImg image"><img src="../assets/svgs/walk2.svg" class="walkImg" alt=""></div>
+    <h4>WALK</h4>
+    <h4>30 mins</h4>
+  </button>
+  <button class="ttc">
+     <div class="streetCarImg image"><img src="../assets/svgs/streetcar.svg" class="TTCImg" alt=""></div>
+     <h4>TTC</h4>
+     <h4>25 mins</h4>
+  </button>
 </div>
   
   
@@ -70,9 +82,9 @@
 
   
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzcJI4y_AZB3EqHRxoWJ6V6LEdSrJAXLE&signed_in=true&callback=app.initMap" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 <script src="scripts/main.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzcJI4y_AZB3EqHRxoWJ6V6LEdSrJAXLE&signed_in=true&callback=app.initMap" async defer></script>
 </body>
 </html>

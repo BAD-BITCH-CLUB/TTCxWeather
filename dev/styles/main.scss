@@ -24,6 +24,7 @@ html {
 
 body {
 	font-size: 1.6rem;
+	font-family: $paragraph
 }
 
 html, body {
@@ -42,9 +43,7 @@ h1, h2, h3, h4, h5, h6, p {
 	height: 100%;
 }
 
-// div.image {
-//   width: 60px;
-// }
+
 
 #floating-panel {
 	position: absolute;
@@ -79,43 +78,51 @@ h1, h2, h3, h4, h5, h6, p {
 
 .skyline {
 	position: absolute;
-	bottom: -1%;
+	bottom: -1.7%;
 	width: 100%;
 }
 
 .title {
-	padding: 10px 0px 40px;
+	padding: 10px 0px 30px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	font-size: 4.5rem;
+	h3 {
+		font-size: 3rem;
+	}
 }
 
 .subTitle {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 30px 0px 40px;
+	padding: 5px 0px 40px;
 	h2 {
-		font-size: 4rem;
+		font-size: 4.5rem;
 	}
 	h3 {
 	    padding: 40px 30px;
+	    font-size: 3rem;
 	}
 
 }
 input[type=text] {
 	border: $grey 2px solid;
 	padding: 20px 40px;
-	width: 315px;
-	color: $grey;
+	width: 600px;
+	color: $teal;
+	text-transform: uppercase;
 	border-radius: 5px;
+	letter-spacing: 12px;
+	cursor: $grey;
 	&:focus, &:active{
 		border: black 2px solid;
 		outline: none;
 	}
 	&::placeholder {
 		color:$teal;
-		letter-spacing: 12px;
+		letter-spacing: 24px;
 		text-align: center;
 	}
 	&:-webkit-autofill{
@@ -144,11 +151,9 @@ form {
 .logo {
 	width: 60px;
 	padding: 14px 0px 20px;
-	color: 
-	svg {
-		fill: currentColor;
-	}
 }
+
+
 
 h1 {
 	font-family: $title;
@@ -165,3 +170,37 @@ h3 {
 	color: $orange;
 
 }
+
+div.image {
+	width: 50px;
+}
+.weatherIcon {
+	display: flex;
+}
+
+
+// DYNAMIC CONTENT 
+button {
+	color: $white;
+	background: $grey;
+	border: none;
+	border-radius: 5px;
+	max-width: 400px;
+	width: 40%;
+	margin: 10px 5px 30px;
+	div.image {
+  		width: 60px;
+  		margin: 0 auto;
+	}
+	div.walkImg img{
+		width: 55px;
+		padding: 20px 0px;
+	}
+	div.streetCarImg img{
+		padding: 6px 0px;
+	}
+}
+button.walk {
+	background: $teal;
+}
+

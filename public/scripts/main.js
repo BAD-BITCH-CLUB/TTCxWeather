@@ -73,6 +73,7 @@ app.getTimeforTTC = function (newTTCinfo) {
 		});
 		// console.log(vehicleInfo)
 		app.trainData = vehicleInfo;
+		console.log(vehicleInfo);
 	});
 };
 
@@ -112,7 +113,6 @@ app.bestTrain = function () {
 		app.longNames.push(vehicleObject);
 	});
 	app.longNames.forEach(function (val, i) {
-
 		if (val.name === app.goodPizza) {
 			app.userTrain(app.longNames[i]);
 		}
@@ -120,7 +120,12 @@ app.bestTrain = function () {
 };
 
 app.userTrain = function (theTrain) {
-	console.log(theTrain);
+	console.log(theTrain.name);
+	console.log('velocity ' + theTrain.velo);
+	console.log('distance ' + theTrain.dist);
+	var time = theTrain.dist / theTrain.velo;
+	console.log(time);
+	// console.log(theTrain);
 };
 
 //////////////////////////

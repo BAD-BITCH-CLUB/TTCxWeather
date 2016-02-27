@@ -10,7 +10,7 @@ app.longNames = [];
 
 $(function(){
  app.init();
- $('#end').val('121 Major Street, Toronto');
+ $('#end').val();
 });
 
 app.init = function(){
@@ -49,12 +49,8 @@ app.getGeolocation = function(){
 			method: 'GET',
 			dataType: 'jsonp',
 		}).then(function(TTCinfo){
-			// console.log(TTCinfo.locations);
-			// console.log(app.userLocation);
-			// console.log(TTCinfo.locations[0].uri);
-			// app.TTCinfo = TTCinfo.locations[0].uri;
 			app.getTimeforTTC(TTCinfo.locations[0].uri);
-		// console.log(TTCinfo.locations[0].uri);
+		console.log(TTCinfo.locations[0].uri);
 		});
 	});
 	//if geolocation isn't available or the user doesn't accept 
@@ -123,6 +119,8 @@ app.bestTrain = function() {
 	app.longNames.forEach(function(val, i){
 		if(val.name === app.goodPizza){
 			app.userTrain(app.longNames[i]);
+		} else {
+			console.log('sorry!')
 		}
 	});
 }
@@ -132,8 +130,11 @@ app.userTrain = function(theTrain) {
 	console.log(theTrain.name)
 	console.log('velocity ' + theTrain.velo);
 	console.log('distance ' + theTrain.dist);
-	var time = theTrain.dist / theTrain.velo;
-	console.log(time);
+	var time = Math.floor((theTrain.dist / theTrain.velo) /10);
+	console.log(time + ' Minutes away');
+	if (time < 0.5){
+		console.log('The train is approaching')
+	}
 	// console.log(theTrain);
 }
 
@@ -165,7 +166,8 @@ app.calculateAndDisplayRoute = function(){
 	app.directionsService.route({
 		origin: app.start,
 		destination: app.end,
-		travelMode: google.maps.TravelMode.TRANSIT
+		travelMode: google.maps.TravelMode.TRANSIT,
+		// travelMode: google.maps.travelMode.WALKING
 	}, function(response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
 		  app.directionsDisplay.setDirections(response);
@@ -188,8 +190,15 @@ app.calculateAndDisplayRoute = function(){
 	});
 }
 
-
-
+$('button.walk').on('click',function(){
+		app.calculateAndDisplayRoute = function(){
+		app.directionsService.route({
+			origin: app.start,
+			destination: app.end,
+			travelMode: google.maps.TravelMode.WALKING
+		});
+	}
+});
 
 ////////////////////////
 ///////WUNDERGROUND/////

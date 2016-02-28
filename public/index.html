@@ -25,7 +25,7 @@
     </div>  
     <form action="">
       <input type="text" id="end" placeholder="DESTINATION">
-      <input type="submit">
+      <input type="submit" id="submit">
     </form>
     <div class="subTitle">
       <h2>Walk</h2> 
@@ -40,41 +40,58 @@
 
 
 
-<div class="laterContent">
+<div class="laterContent hide">
   <div class="weatherIcon">
-    <div class="sun image">
+    <div class="sun image hide">
       <img src="assets/svgs/sun.svg" alt="">
     </div>
-    <div class="partSun image">
+    <div class="partSun image hide">
       <img src="assets/svgs/partlySunny.svg" alt="">
     </div>
-    <div class="rain image">
+    <div class="rain image hide">
       <img src="assets/svgs/rain.svg" alt="">
     </div>
-    <div class="snow image">
+    <div class="snow image hide">
       <img src="assets/svgs/snow.svg" alt="">
     </div>
-    <div class="cloud image">
+    <div class="cloud image hide">
       <img src="assets/svgs/cloud.svg" alt="">
     </div>
   </div>
+  <span class="weather">{ Weather }</span>
+  <p class="temp"> <span class="temp_c">##</span>&#176;C</p>
+  <p class="feels">...But it feels like: <span class="feelsLikeTemp">##</span>&#176;C</p>
   <button class="walk" value="WALKING">
     <div class="walkImg image"><img src="../assets/svgs/walk2.svg" class="walkImg" alt=""></div>
     <h4>WALK</h4>
-    <h4>30 mins</h4>
+    <p class ="walkJourny">Total journey time: <span class="walkTotal">  </span>minutes</p>
   </button>
   <button class="ttc" value="TRANSIT">
      <div class="streetCarImg image"><img src="../assets/svgs/streetcar.svg" class="TTCImg" alt=""></div>
      <h4>TTC</h4>
-     <h4>25 mins</h4>
+     <p class ="ttcJourny">Total journey time: <span class="ttcTotal"> </span>minutes</p>
   </button>
 </div>
   
-  
-  <div id="floating-panel">
-    </div>
-    <div id="right-panel"></div>
-    <div id="map"></div>
+<div class="wholeMap hide">
+    <p class="nextTTC"> The closest stop is <span class="ttcStop"> </span>hurry up!</p>
+    <p>Your streetcar is arriving in <span class="TTCminutes"> </span>  minute(s).</p>
+
+    <button class="goBack">Go back to start</button>
+</div>
+
+    <div id="floating-panel" class= "viewMap hide"></div>
+    <div id="right-panel" class= "viewMap hide"></div>
+    <div id="map" class= "viewMap hide"></div>
+
+
+    <div id="new-panel" class="viewNewMap hide"></div>
+    <div id="left-panel" class="viewNewMap hide"></div>
+    <div id="new-map" class="viewNewMap hide"></div>
+
+
+
+
 
 
 

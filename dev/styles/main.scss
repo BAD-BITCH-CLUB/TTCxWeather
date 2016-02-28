@@ -40,7 +40,9 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 #map {
-	height: 100%;
+	margin:0 auto;
+	height: 80%;
+	width:80%;
 }
 
 
@@ -135,7 +137,7 @@ input[type=text] {
 
 
 input[type=submit]{
-	display: none;
+	// display: none;
 }
 img {
   width: 100%;
@@ -178,6 +180,14 @@ div.image {
 	display: flex;
 }
 
+// WEATHER IMAGES
+.show {
+	display: block;
+}
+
+.hide {
+	display: none;
+}
 
 // DYNAMIC CONTENT 
 button {

@@ -2,12 +2,19 @@
 
 var app = {};
 
+app.latitude = 43.7000;
+app.longitude = -79.4000;
 app.closeStreetCar = '';
 app.goodPizza = '';
 app.userLocation = '';
 app.x = 0;
 app.y = 0;
 app.longNames = [];
+app.finalMinutes = '';
+app.nextTTC = '';
+app.chocolateIceCream = '';
+
+var timeblock = '';
 
 $(function () {
 	app.init();
@@ -22,8 +29,8 @@ app.init = function () {
 		console.log('yolo');
 		app.start = app.userLocation;
 		app.end = $('input#end').val();
-		app.initMap();
-		app.calculateAndDisplayRoute(app.directionsService, app.directionsDisplay);
+		// app.initMap();
+		// app.calculateAndDisplayRoute(app.directionsService, app.directionsDisplay);
 	});
 };
 
@@ -46,7 +53,6 @@ app.getGeolocation = function () {
 				dataType: 'jsonp'
 			}).then(function (TTCinfo) {
 				app.getTimeforTTC(TTCinfo.locations[0].uri);
-				console.log(TTCinfo.locations[0].uri);
 			});
 		});
 		//if geolocation isn't available or the user doesn't accept
@@ -74,7 +80,6 @@ app.getTimeforTTC = function (newTTCinfo) {
 };
 
 app.getTrain = function () {
-
 	var item = $('table.adp-directions tr:nth-child(2) td div')[0];
 	var pizza = $(item).find('span:last-child').text();
 
@@ -82,13 +87,46 @@ app.getTrain = function () {
 		var splitPizza = pizza.split('- ');
 		app.goodPizza = splitPizza[1];
 	}
+
+	timeblock = $('div.adp div.adp-summary span:last-child span').text();
+
+	var timeSplit = timeblock.split('mins');
+	var timeFinal = timeSplit.join(' ');
+	$('.ttc span.ttcTotal').text(timeFinal);
+
+	var googleMapNextTrain = $('div.adp div:nth-child(3) div:nth-child(2) table.adp-directions tbody tr:nth-child(2) td.adp-substep div:nth-of-type(2) span:first-child span:first-child').text();
+	console.log("next-train time:" + googleMapNextTrain);
+
+	var noPMstring = googleMapNextTrain.split('pm' || 'am');
+	var noPM = noPMstring.join('');
+	console.log(noPM);
+
+	var finalstring = noPM.split(':');
+	app.finalMinutes = +finalstring[0] * 60 + +finalstring[1];
+
+	var goodTime = formatTime(new Date());
+	var splitTime = goodTime.split('pm' || 'am');
+	var finalTime = splitTime.join('');
+
+	var hm = finalTime; // your input string
+	var a = hm.split(':'); // split it at the colons
+
+	// Hours are worth 60 minutes.
+	var currentMinutes = +a[0] * 60 + +a[1];
+
+	console.log(currentMinutes);
+
+	app.nextTTC = app.finalMinutes - currentMinutes;
+	console.log('your next TTC arrives in ' + app.nextTTC);
+
+	var iceCream = $('div.adp div:nth-child(3) div:nth-child(2) table.adp-directions tbody tr:first-child td.adp-substep div:first-of-type span:nth-of-type(2)').text();
+	// console.log('this is your stop' + iceCream);
+
+	var mintIceCream = iceCream.split('Walk to');
+	app.chocolateIceCream = mintIceCream.join(' ');
+	console.log('your stop is at' + app.chocolateIceCream);
+
 	app.bestTrain();
-	// for (var i = 0; i < app.longNames.length; i++) {
-	// 	if (app.longNames[i] == app.goodPizza) {
-	// 		console.log("this is the streetcar we want " + app.longNames[i]);
-	// 		app.closeStreetCar = app.longNames[i];
-	// 	}
-	// }
 };
 
 app.bestTrain = function () {
@@ -137,7 +175,7 @@ app.initMap = function () {
 	app.directionsService = new google.maps.DirectionsService();
 	app.directionsDisplay = new google.maps.DirectionsRenderer();
 	var map = new google.maps.Map(document.getElementById('map'), {
-		zoom: 17,
+		zoom: 15,
 		center: { lat: app.x, lng: app.y }
 	});
 
@@ -152,10 +190,9 @@ app.initMap = function () {
 app.calculateAndDisplayRoute = function () {
 	app.directionsService.route({
 		origin: app.start,
-		destination: app.end,
+		destination: app.end + ', Toronto',
 		travelMode: google.maps.TravelMode.TRANSIT
-	}, // travelMode: google.maps.travelMode.WALKING
-	function (response, status) {
+	}, function (response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
 			app.directionsDisplay.setDirections(response);
 			//Call setInterval, store it in a var
@@ -166,7 +203,7 @@ app.calculateAndDisplayRoute = function () {
 					//Clear the interval
 					clearInterval(interval);
 					//get train
-					app.getTrain();
+					// app.getTrain();
 				}
 			}, 100);
 		} else {
@@ -175,22 +212,54 @@ app.calculateAndDisplayRoute = function () {
 	});
 };
 
-$('button.walk').on('click', function () {
-	app.calculateAndDisplayRoute = function () {
-		app.directionsService.route({
-			origin: app.start,
-			destination: app.end,
-			travelMode: google.maps.TravelMode.WALKING
-		});
-	};
-});
+// app.initMap = function() {
+//   app.directionsService = new google.maps.DirectionsService;
+//   app.directionsDisplay = new google.maps.DirectionsRenderer;
+//   var map = new google.maps.Map(document.getElementById('new-map'), {
+// 		zoom: 15,
+// 		center: { lat: app.x, lng: app.y}
+//   });
+
+// 	app.directionsDisplay.setMap(map);
+// 	app.directionsDisplay.setPanel(document.getElementById('left-panel'));
+
+// 	var control = document.getElementById('new-panel');
+// 	// control.style.display = 'block';
+// 	map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
+// }
+
+// app.calculateAndDisplayRoute = function(){
+// 	app.directionsService.route({
+// 		origin: app.start,
+// 		destination: app.end,
+// 		travelMode: google.maps.TravelMode.TRANSIT
+// 	}, function(response, status) {
+// 		if (status === google.maps.DirectionsStatus.OK) {
+// 		  app.directionsDisplay.setDirections(response);
+// 		  //Call setInterval, store it in a var
+// 		  // it will return an id that we need to clear
+// 		  var interval = setInterval(function() {
+// 			//If selector gets something
+// 			if($('.adp-directions').length > 0) {
+// 				//Clear the interval
+// 				clearInterval(interval)
+// 				//get train
+// 				app.getTrain();
+// 			}
+// 		  },100);
+
+// 	  } else {
+// 		  window.alert('Directions request failed due to ' + status);
+// 		}
+
+// 	});
+
+// };		
 
 ////////////////////////
 ///////WUNDERGROUND/////
 ////////////////////////
-
-app.latitude = 43.7000;
-app.longitude = -79.4000;
 
 app.weatherKey = 'e4190875c1187be4';
 app.weatherURL = 'http://api.wunderground.com/api/' + app.weatherKey + '/conditions/q/' + app.latitude + ',' + app.longitude + '.json';
@@ -201,7 +270,8 @@ app.getWeather = function () {
 		dataType: 'json'
 
 	}).then(function (info) {
-		// console.log(info);
+		console.log(info);
+		app.displayWeather(info);
 	});
 };
 
@@ -211,12 +281,174 @@ app.getWeather();
 
 // Stashed changes
 
+//////////////////////
+/////FUNCTIONALITY////
+//////////////////////
+
+///////////////////////
+////WEATHER DISPLAY////
+//////////////////////
+
+$('#submit').on('click', function () {
+	$('div.window').addClass('hide');
+	$('div.laterContent').toggle();
+});
+
+app.displayWeather = function (torontoWeather) {
+	var weatherInfo = torontoWeather.current_observation;
+	console.log(weatherInfo);
+
+	$('span.weather').text(weatherInfo.weather);
+	$('span.temp_c').text(weatherInfo.temp_c);
+	$('span.feelsLikeTemp').text(weatherInfo.feelslike_c);
+
+	var icon = weatherInfo.icon;
+
+	if (icon === "mostlycloudy" || icon === "mostlysunny" || icon === "partlycloudy" || icon === "partlysunny" || icon === "partlycloudy") {
+
+		$('div.laterContent div.partSun').toggle();
+	} else if (icon === "clear" || icon === "sunny") {
+		$('div.laterContent div.sun').toggle();
+	} else if (icon === "chancerain" || icon === "chancetstorms" || icon === "rain" || icon === "tstorms") {
+		$('div.laterContent div.rain').toggle();
+	} else if (icon === "chanceflurries" || icon === "chancesleet" || icon === "sleet" || icon === "flurries" || icon === "snow" || icon === "chancesnow") {
+		$('div.laterContent div.snow').toggle();
+	} else if (icon === "cloudy" || icon === "fog" || icon === "hazy") {
+		$('div.laterContent div.cloud').toggle();
+	}
+};
+
+app.displayTime = function () {};
+
+///////////////////////
+/////ROUTE DISPLAY/////
+//////////////////////
+
+$('div.laterContent button.ttc').on('click', function () {
+	$('div.viewMap').toggle();
+	$('span.TTCminutes').text(app.nextTTC);
+	$('span.ttcStop').text(app.chocolateIceCream);
+});
+
+$('div.laterContent button.walk').on('click', function () {
+	$('div.viewNewMap').toggle();
+});
+
+var formatTime = function () {
+	function addZero(num) {
+		return num >= 0 && num < 10 ? "0" + num : num + "";
+	}
+
+	return function (dt) {
+		var formatted = '';
+
+		if (dt) {
+			var hours24 = dt.getHours();
+			var hours = (hours24 + 11) % 12 + 1;
+			formatted = [formatted, [addZero(hours), addZero(dt.getMinutes())].join(":"), hours24 > 11 ? "pm" : "am"].join(" ");
+		}
+		return formatted;
+	};
+}();
+
+$('button').on('click', function () {
+	var correctMap = $(this).val();
+	app.initMap();
+	app.calculateAndDisplayRoute(app.directionsService, app.directionsDisplay);
+	if (correctMap === "TRANSIT") {
+		console.log('transit');
+
+		app.initMap = function () {
+			app.directionsService = new google.maps.DirectionsService();
+			app.directionsDisplay = new google.maps.DirectionsRenderer();
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 15,
+				center: { lat: app.x, lng: app.y }
+			});
+
+			app.directionsDisplay.setMap(map);
+			app.directionsDisplay.setPanel(document.getElementById('right-panel'));
+
+			var control = document.getElementById('floating-panel');
+			// control.style.display = 'block';
+			map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+		};
+
+		app.calculateAndDisplayRoute = function () {
+			app.directionsService.route({
+				origin: app.start,
+				destination: app.end + ', Toronto',
+				travelMode: google.maps.TravelMode.TRANSIT
+			}, function (response, status) {
+				if (status === google.maps.DirectionsStatus.OK) {
+					app.directionsDisplay.setDirections(response);
+					//Call setInterval, store it in a var
+					// it will return an id that we need to clear
+					var interval = setInterval(function () {
+						//If selector gets something
+						if ($('.adp-directions').length > 0) {
+							//Clear the interval
+							clearInterval(interval);
+							//get train
+							app.getTrain();
+						}
+					}, 100);
+				} else {
+					window.alert('Directions request failed due to ' + status);
+				}
+			});
+		};
+	} else if (correctMap === 'WALKING') {
+		console.log('walking');
+
+		app.initMap = function () {
+			app.directionsService = new google.maps.DirectionsService();
+			app.directionsDisplay = new google.maps.DirectionsRenderer();
+			var map = new google.maps.Map(document.getElementById('new-map'), {
+				zoom: 15,
+				center: { lat: app.x, lng: app.y }
+			});
+
+			app.directionsDisplay.setMap(map);
+			app.directionsDisplay.setPanel(document.getElementById('left-panel'));
+
+			var control = document.getElementById('new-panel');
+			// control.style.display = 'block';
+			map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+		};
+
+		app.calculateAndDisplayRoute = function () {
+			app.directionsService.route({
+				origin: app.start,
+				destination: app.end + ', Toronto',
+				travelMode: google.maps.TravelMode.WALKING
+			}, function (response, status) {
+				if (status === google.maps.DirectionsStatus.OK) {
+					app.directionsDisplay.setDirections(response);
+					//Call setInterval, store it in a var
+					// it will return an id that we need to clear
+					var interval = setInterval(function () {
+						//If selector gets something
+						if ($('.adp-directions').length > 0) {
+							//Clear the interval
+							clearInterval(interval);
+							//get train
+							app.getTrain();
+						}
+					}, 100);
+				} else {
+					window.alert('Directions request failed due to ' + status);
+				}
+			});
+		};
+	}
+});
+
 /////////////////////PSUEDO CODE/////////////////////
 
 // Collect user's starting location using geolocation
 
 // Display the current weather conditions
-
 // Change the css of the logo icon to correspond with the weather conditions 
 
 // Collect the user's desired destination

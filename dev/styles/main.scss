@@ -42,22 +42,59 @@ h1, h2, h3, h4, h5, h6, p {
 	margin: 0;
 }
 
-#map {
-	margin:0 auto;
-	height: 80%;
-	width:80%;
+.wholeMap {
+	position: relative;
+
 }
 
+#map {
+	margin:20px;
+	height: 60%;
+	width: calc(50% - 40px);
+	float: left;
+	border-radius: 5px;
+	border: 4px solid $orange;
 
+
+}
+
+#right-panel {
+	width: 50%;
+	float: left;
+	overflow: scroll;
+	padding: 20px;
+	height: 65%;
+
+}
+
+div.adp-warnbox{
+	display: none;
+
+}
+
+.mapTitle, .mapTitleWalk {
+	text-align: center;
+    padding: 12px 10px 0px;
+    color: $grey;
+    font-family: $paragraph;
+    font-size: 2.3rem;
+    font-weight: bold;
+    .TTCminutes, .ttcStop, .walkTime {
+    	color: $orange;
+    	font-size: 2.5rem;
+    	text-transform: uppercase;
+    }
+
+}
 
 #floating-panel {
 	position: absolute;
 	top: 10px;
 	left: 25%;
 	z-index: 5;
-	background-color: #fff;
+	background-color: rgba(0,0,0,0);
 	padding: 5px;
-	border: 1px solid #999;
+	// border: 1px solid #999;
 	text-align: center;
 	font-family: 'Roboto','sans-serif';
 	line-height: 30px;
@@ -70,13 +107,14 @@ h1, h2, h3, h4, h5, h6, p {
 	align-items: center;
 }
 
-.window, .laterContent {
+.window, .laterContent, .wholeMap {
 	border: 5px solid $grey;
 	border-radius: 10px;	
-	height: 94vh;
+	height: 92vh;
 	display: flex;
 	flex-direction: column;
-	margin: 20px;
+	margin: 13px;
+	margin-bottom: 5px;
 	background: $white1;
 	position: relative;
 }
@@ -169,6 +207,12 @@ input[type=text] {
 
 }
 
+input[type=text]:focus + input[type=submit] {
+	border: $orange 2px solid;
+	border-left: none;
+	outline: none;
+}
+
 
 form {
 	position: relative;
@@ -185,6 +229,7 @@ input[type=submit]{
 	border-bottom-left-radius: 0px;
 	border-top-left-radius: 0px; 
 	font-family: FontAwesome;
+
 }
 
 
@@ -242,6 +287,8 @@ p.temp {
 
 .weatherIcon {
 	display: flex;
+    width: 90px;
+    padding: 14px 0px 0px;
 	div {
 		width: 100%;
 		padding: 20px 0px;
@@ -291,9 +338,112 @@ button {
 	}
 }
 
+button.goBack{
+	margin: 20px auto;
+	padding: 20px 0px;
+	display: block;
+	background: $white1;
+	border: 4px solid $grey;
+	color: $grey;
+	width: 75%;
+	text-transform: uppercase;
+	letter-spacing: 6px;
+	&:hover{
+		background: $teal;
+		color: $white;
+		&:active, &:focus {
+			outline: none;
+		}
+	}
+}
 
-// button.walk {
-// 	background: $teal;
-// }
+footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+
+}
+
+h6 {
+	color: $white;
+	text-transform: uppercase;
+	letter-spacing: 6px;
+	padding: 0px;
+	margin: 0px;
+
+	a {
+		color: $white;
+		text-decoration: none;
+		&:hover{
+			color:$orange;
+		}
+	img {
+		width: 60px;
+	}
+	img.googs {
+		width: 15px;
+	}
+	}
+}
+
+h6.credits {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+
+@media (max-width: 650px) {
+	input[type=text] {
+    color: RGB(52, 168, 149);
+    padding: 13px 40px;
+    width: 300px;
+    text-transform: uppercase;
+    letter-spacing: 0px;
+    font-size: 1.2rem;
+    &::placeholder {
+    	letter-spacing: 8px;
+    	text-align: center;
+    }
+}
+}
+
+@media (max-width: 600px){
+	#map, #right-panel{
+		width:100%;
+		float:none;
+	}
+	.wholeMap {
+		height: auto;
+	}
+	#map{
+		height: 40vh;
+		width:90%;
+	
+	}
+}
+
+@media (max-width: 420px){
+	.window, .laterContent, .wholeMap{
+		width:100%;
+		margin: 0px;
+	}
+	.mapTitle, .mapTitleWalk {
+	    padding: 12px 10px 0px;
+	    font-size: 2rem;
+	    .TTCminutes, .ttcStop, .walkTime {
+	    	font-size: 2.3rem;
+	    }
+    }
+
+
+}
+
+@media (max-width: 320px){
+	input[type=text] {
+		width: 280px;
+	}
+}
 
 

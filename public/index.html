@@ -65,7 +65,7 @@
   <p class="type">In Toronto, it is:</p>
   <p><span class="weather">{ Weather }</span></p>
   <p class="temp"> <span class="temp_c">##</span>&#176;C</p>
-  <p class="feels">...But it feels like: <span class="feelsLikeTemp">##</span>&#176;C</p>
+  <p class="feels">...But it feels like <span class="feelsLikeTemp">##</span>&#176;C</p>
   <div class="buttons">
     <button class="walk" value="WALKING">
       <div class="walkImg image"><img src="../assets/svgs/walk2.svg" class="walkImg" alt=""></div>
@@ -91,17 +91,24 @@
 
 
 
-<div class="wholeMap hide">
-    <p class="nextTTC"> The closest stop is <span class="ttcStop"> </span>hurry up!</p>
-    <p>Your streetcar is arriving in <span class="TTCminutes"> </span>  minute(s).</p>
-</div>
+<div class="wholeMap clearfix hide">
+  <div class="mapTitle">
+      <p class="nextTTC"> The closest stop is <span class="ttcStop"> </span>hurry up!</p>
+      <p>Your streetcar is arriving in <span class="TTCminutes"> </span>  minute(s).</p>
+  </div>
+  <div class="mapTitleWalk hide">
+      <p>It will take you <span class="walkTime"></span> to walk!</p>
+      <p>Better get a move on!</p>
+  </div>
 
     <div id="floating-panel" class= "viewMap hide"></div>
     <div id="right-panel" class= "viewMap hide"></div>
-    <div id="map" class= "viewMap hide"></div>
+    <div id="map" class= "viewMap hide">
+      
+    </div>
 
-    <button class="goBack hide">Go back to start</button>
-
+    <button class="goBack hide">Go somewhere else?</button>
+</div>
   <!--   <div id="new-panel" class="viewNewMap hide"></div>
     <div id="left-panel" class="viewNewMap hide"></div>
     <div id="new-map" class="viewNewMap hide"></div> -->
@@ -110,9 +117,10 @@
  
 
 
-
-
-
+<footer>
+  <h6>Made by <a href="http://emmakoza.ca">Emma</a>, <a href="http://meaghaneleanor.com">Meaghan</a> and <a href="http://suzettemccanny.com">Suzette</a></h6>
+  <h6 class="credits">Powered by <a href=""><img src="http://icons.wxug.com/logos/PNG/wundergroundLogo_4c_horz.png" alt="Wunderground Logo"></a> <a href="https://myttc.ca"><img src="assets/logo.png" alt=""></a><a href="http://developers.google.com"><img class="googs" src="assets/googs.png" alt=""></a></h6>
+</footer>
 
   
 

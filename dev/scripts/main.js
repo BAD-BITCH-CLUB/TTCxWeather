@@ -136,6 +136,10 @@ app.getTrain = function() {
 		$('span.TTCminutes').text(app.nextTTC);
 	  $('span.ttcStop').text(app.chocolateIceCream);
 
+	  var hustleTime = $('div.adp div:nth-child(3) div.adp-summary span:nth-child(3)').text();
+	  console.log(hustleTime);
+	  $('span.walkTime').text(hustleTime);
+
 		app.bestTrain();
 }
 
@@ -311,11 +315,6 @@ app.displayTime = function(){
 //////////////////////
 
 
-// $('div.laterContent button.walk').on('click', function(){
-// 	$('div.viewNewMap').toggle();
-// })
-
-
 var formatTime = (function () {
     function addZero(num) {
         return (num >= 0 && num < 10) ? "0" + num : num + "";
@@ -337,9 +336,12 @@ var formatTime = (function () {
 
 $('button.walk').on('click', function(){
   console.log('Walking button clicked');
-  $('button.goBack').toggle();
+  // $('button.goBack').toggle();
   $('.laterContent').toggle();
   $('div.viewMap').toggle();
+  $('.wholeMap').toggle();
+  $('.mapTitle').toggle();
+  $('.mapTitleWalk').toggle();
 	app.travelMode = 'WALKING'; 
 	app.initMap();
 	app.calculateAndDisplayRoute();
@@ -347,7 +349,7 @@ $('button.walk').on('click', function(){
 
 $('button.ttc').on('click', function(){
   console.log('Transit button clicked');
-  $('button.goBack').toggle();
+  // $('button.goBack').toggle();
   $('.laterContent').toggle();
   app.travelMode = 'TRANSIT';
   app.initMap();
@@ -363,6 +365,8 @@ $('button.ttc').on('click', function(){
 $('button.goBack').on('click', function(){
 	location.reload();
 });
+
+
 
 
 

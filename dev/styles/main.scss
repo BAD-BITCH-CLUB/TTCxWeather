@@ -12,6 +12,7 @@ input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}b
 $grey: RGB(76, 84, 84);
 $teal: RGB(52, 168, 149);
 $white: #FFF5ED;
+$white1: #FFFAF6;
 $orange: RGB(250, 115, 85);
 
 //Variables- fonts 
@@ -24,7 +25,9 @@ html {
 
 body {
 	font-size: 1.6rem;
-	font-family: $paragraph
+	font-family: $paragraph;
+	background: $teal
+	;
 }
 
 html, body {
@@ -67,22 +70,52 @@ h1, h2, h3, h4, h5, h6, p {
 	align-items: center;
 }
 
-.window {
+.window, .laterContent {
 	border: 5px solid $grey;
 	border-radius: 10px;	
 	height: 94vh;
 	display: flex;
 	flex-direction: column;
 	margin: 20px;
-	background: $white;
+	background: $white1;
 	position: relative;
 }
+
+
+.laterContent{
+	background: $white;
+}
+
+.laterContent .overlay{
+	position: absolute;
+	background: rgba(255,255,255,0.5);
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 3;
+}
+
+
+
+.centered {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 4;
+}
+
+
+
 
 .skyline {
 	position: absolute;
 	bottom: -1.7%;
 	width: 100%;
 }
+
+
 
 .title {
 	padding: 10px 0px 30px;
@@ -109,36 +142,52 @@ h1, h2, h3, h4, h5, h6, p {
 	}
 
 }
-input[type=text] {
+input[type=submit], input[type=text] {
 	border: $grey 2px solid;
+	width: 60px;
+	border-radius: 5px;
+}
+
+input[type=text] {
+	color: $teal;
 	padding: 20px 40px;
 	width: 600px;
-	color: $teal;
 	text-transform: uppercase;
-	border-radius: 5px;
 	letter-spacing: 12px;
-	cursor: $grey;
 	&:focus, &:active{
-		border: black 2px solid;
+		border: $orange 2px solid;
 		outline: none;
 	}
 	&::placeholder {
-		color:$teal;
+		color: $teal;
 		letter-spacing: 24px;
 		text-align: center;
 	}
 	&:-webkit-autofill{
-		background-color: white !important;
+		background-color: $white !important;
 	}
 
 }
 
 
-
+form {
+	position: relative;
+}
 
 input[type=submit]{
-	// display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: $teal;
+	color: $white1;
+	border-left: none;
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px; 
+	font-family: FontAwesome;
 }
+
+
 img {
   width: 100%;
   color: $grey;
@@ -150,14 +199,14 @@ form {
 	position: relative;
 }
 
-.logo {
+.logo, .weatherIcon {
 	width: 60px;
 	padding: 14px 0px 20px;
 }
 
 
 
-h1 {
+h1  {
 	font-family: $title;
 }
 
@@ -170,14 +219,33 @@ h2 {
 
 h3 {
 	color: $orange;
-
 }
+
 
 div.image {
 	width: 50px;
 }
+
+p.feels, p.type {
+	font-size: 2.5rem;
+	font-family: $paragraph;
+	color: $teal;
+	padding: 5px 0px;
+}
+
+p.temp {
+	font-size: 4rem;
+	font-family: $title;
+	color: $orange;
+
+}
+
 .weatherIcon {
 	display: flex;
+	div {
+		width: 100%;
+		padding: 20px 0px;
+	}
 }
 
 // WEATHER IMAGES
@@ -190,13 +258,22 @@ div.image {
 }
 
 // DYNAMIC CONTENT 
+
+.buttons {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	padding-top: 35px;
+}
+
 button {
 	color: $white;
 	background: $grey;
 	border: none;
 	border-radius: 5px;
 	max-width: 400px;
-	width: 40%;
+	width: calc(50% - 20px);
 	margin: 10px 5px 30px;
 	div.image {
   		width: 60px;
@@ -209,8 +286,14 @@ button {
 	div.streetCarImg img{
 		padding: 6px 0px;
 	}
+	&:hover {
+		background: $teal;
+	}
 }
-button.walk {
-	background: $teal;
-}
+
+
+// button.walk {
+// 	background: $teal;
+// }
+
 

@@ -3,9 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>TTCxWeather</title>
-	<link rel="stylesheet" href="styles/style.css">
-	<!-- <link rel="stylesheet" href="main.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:700,400|Open+Sans:400,300italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 
@@ -25,7 +25,7 @@
     </div>  
     <form action="">
       <input type="text" id="end" placeholder="DESTINATION">
-      <input type="submit" id="submit">
+      <input type="submit" id="submit" value="&#xf002;">
     </form>
     <div class="subTitle">
       <h2>Walk</h2> 
@@ -41,6 +41,9 @@
 
 
 <div class="laterContent hide">
+<div class="overlay"></div>
+ <div class="centered">
+
   <div class="weatherIcon">
     <div class="sun image hide">
       <img src="assets/svgs/sun.svg" alt="">
@@ -58,25 +61,37 @@
       <img src="assets/svgs/cloud.svg" alt="">
     </div>
   </div>
-  <span class="weather">{ Weather }</span>
+
+  <p class="type"><span class="weather">{ Weather }</span></p>
   <p class="temp"> <span class="temp_c">##</span>&#176;C</p>
   <p class="feels">...But it feels like: <span class="feelsLikeTemp">##</span>&#176;C</p>
-  <button class="walk" value="WALKING">
-    <div class="walkImg image"><img src="../assets/svgs/walk2.svg" class="walkImg" alt=""></div>
-    <h4>WALK</h4>
-    <p class ="walkJourny">Total journey time: <span class="walkTotal">  </span>minutes</p>
-  </button>
-  <button class="ttc" value="TRANSIT">
-     <div class="streetCarImg image"><img src="../assets/svgs/streetcar.svg" class="TTCImg" alt=""></div>
-     <h4>TTC</h4>
-     <p class ="ttcJourny">Total journey time: <span class="ttcTotal"> </span>minutes</p>
-  </button>
+  <div class="buttons">
+    <button class="walk" value="WALKING">
+      <div class="walkImg image"><img src="../assets/svgs/walk2.svg" class="walkImg" alt=""></div>
+      <h4>WALK</h4>
+    </button>
+    
+    <button class="ttc" value="TRANSIT">
+       <div class="streetCarImg image"><img src="../assets/svgs/streetcar.svg" class="TTCImg" alt=""></div>
+       <h4>TTC</h4>
+    </button>
+  </div>
+</div>
+
+
+  <div class="skyline skyline2">
+    <img src="assets/skyline.svg" alt="">
+  </div>
 </div>
   
+
+
+
+
+
 <div class="wholeMap hide">
     <p class="nextTTC"> The closest stop is <span class="ttcStop"> </span>hurry up!</p>
     <p>Your streetcar is arriving in <span class="TTCminutes"> </span>  minute(s).</p>
-
     <button class="goBack">Go back to start</button>
 </div>
 

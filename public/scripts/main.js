@@ -284,9 +284,9 @@ app.displayTime = function () {};
 /////ROUTE DISPLAY/////
 //////////////////////
 
-$('div.laterContent button.walk').on('click', function () {
-	$('div.viewNewMap').toggle();
-});
+// $('div.laterContent button.walk').on('click', function(){
+// 	$('div.viewNewMap').toggle();
+// })
 
 var formatTime = function () {
 	function addZero(num) {
@@ -307,6 +307,8 @@ var formatTime = function () {
 
 $('button.walk').on('click', function () {
 	console.log('Walking button clicked');
+	$('button.goBack').toggle();
+	$('.laterContent').toggle();
 	$('div.viewMap').toggle();
 	app.travelMode = 'WALKING';
 	app.initMap();
@@ -315,6 +317,8 @@ $('button.walk').on('click', function () {
 
 $('button.ttc').on('click', function () {
 	console.log('Transit button clicked');
+	$('button.goBack').toggle();
+	$('.laterContent').toggle();
 	app.travelMode = 'TRANSIT';
 	app.initMap();
 	app.calculateAndDisplayRoute();
@@ -324,6 +328,10 @@ $('button.ttc').on('click', function () {
 	// $('span.ttcStop').text(app.chocolateIceCream);
 	console.log(app.chocolateIceCream);
 	console.log(app.nextTTC);
+});
+
+$('button.goBack').on('click', function () {
+	location.reload();
 });
 
 /////////////////////PSUEDO CODE/////////////////////

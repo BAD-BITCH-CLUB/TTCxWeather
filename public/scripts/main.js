@@ -13,7 +13,7 @@ app.longNames = [];
 app.finalMinutes = '';
 app.nextTTC = '';
 app.chocolateIceCream = '';
-
+app.travelMode = '';
 var timeblock = '';
 
 $(function () {
@@ -27,6 +27,7 @@ app.init = function () {
 	$('form').on('submit', function (e) {
 		e.preventDefault();
 		console.log('yolo');
+
 		app.start = app.userLocation;
 		app.end = $('input#end').val();
 		// app.initMap();
@@ -120,11 +121,14 @@ app.getTrain = function () {
 	console.log('your next TTC arrives in ' + app.nextTTC);
 
 	var iceCream = $('div.adp div:nth-child(3) div:nth-child(2) table.adp-directions tbody tr:first-child td.adp-substep div:first-of-type span:nth-of-type(2)').text();
-	// console.log('this is your stop' + iceCream);
+	console.log('this is your stop' + iceCream);
 
 	var mintIceCream = iceCream.split('Walk to');
 	app.chocolateIceCream = mintIceCream.join(' ');
 	console.log('your stop is at' + app.chocolateIceCream);
+
+	$('span.TTCminutes').text(app.nextTTC);
+	$('span.ttcStop').text(app.chocolateIceCream);
 
 	app.bestTrain();
 };
@@ -188,10 +192,11 @@ app.initMap = function () {
 };
 
 app.calculateAndDisplayRoute = function () {
+	console.log('CalculateAndDisplayRoute called, travel mode is: ' + app.travelMode);
 	app.directionsService.route({
 		origin: app.start,
 		destination: app.end + ', Toronto',
-		travelMode: google.maps.TravelMode.TRANSIT
+		travelMode: app.travelMode
 	}, function (response, status) {
 		if (status === google.maps.DirectionsStatus.OK) {
 			app.directionsDisplay.setDirections(response);
@@ -203,7 +208,7 @@ app.calculateAndDisplayRoute = function () {
 					//Clear the interval
 					clearInterval(interval);
 					//get train
-					// app.getTrain();
+					app.getTrain();
 				}
 			}, 100);
 		} else {
@@ -211,51 +216,6 @@ app.calculateAndDisplayRoute = function () {
 		}
 	});
 };
-
-// app.initMap = function() {
-//   app.directionsService = new google.maps.DirectionsService;
-//   app.directionsDisplay = new google.maps.DirectionsRenderer;
-//   var map = new google.maps.Map(document.getElementById('new-map'), {
-// 		zoom: 15,
-// 		center: { lat: app.x, lng: app.y}
-//   });
-
-// 	app.directionsDisplay.setMap(map);
-// 	app.directionsDisplay.setPanel(document.getElementById('left-panel'));
-
-// 	var control = document.getElementById('new-panel');
-// 	// control.style.display = 'block';
-// 	map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-
-// }
-
-// app.calculateAndDisplayRoute = function(){
-// 	app.directionsService.route({
-// 		origin: app.start,
-// 		destination: app.end,
-// 		travelMode: google.maps.TravelMode.TRANSIT
-// 	}, function(response, status) {
-// 		if (status === google.maps.DirectionsStatus.OK) {
-// 		  app.directionsDisplay.setDirections(response);
-// 		  //Call setInterval, store it in a var
-// 		  // it will return an id that we need to clear
-// 		  var interval = setInterval(function() {
-// 			//If selector gets something
-// 			if($('.adp-directions').length > 0) {
-// 				//Clear the interval
-// 				clearInterval(interval)
-// 				//get train
-// 				app.getTrain();
-// 			}
-// 		  },100);
-
-// 	  } else {
-// 		  window.alert('Directions request failed due to ' + status);
-// 		}
-
-// 	});
-
-// };		
 
 ////////////////////////
 ///////WUNDERGROUND/////
@@ -324,12 +284,6 @@ app.displayTime = function () {};
 /////ROUTE DISPLAY/////
 //////////////////////
 
-$('div.laterContent button.ttc').on('click', function () {
-	$('div.viewMap').toggle();
-	$('span.TTCminutes').text(app.nextTTC);
-	$('span.ttcStop').text(app.chocolateIceCream);
-});
-
 $('div.laterContent button.walk').on('click', function () {
 	$('div.viewNewMap').toggle();
 });
@@ -351,97 +305,25 @@ var formatTime = function () {
 	};
 }();
 
-$('button').on('click', function () {
-	var correctMap = $(this).val();
+$('button.walk').on('click', function () {
+	console.log('Walking button clicked');
+	$('div.viewMap').toggle();
+	app.travelMode = 'WALKING';
 	app.initMap();
-	app.calculateAndDisplayRoute(app.directionsService, app.directionsDisplay);
-	if (correctMap === "TRANSIT") {
-		console.log('transit');
+	app.calculateAndDisplayRoute();
+});
 
-		app.initMap = function () {
-			app.directionsService = new google.maps.DirectionsService();
-			app.directionsDisplay = new google.maps.DirectionsRenderer();
-			var map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 15,
-				center: { lat: app.x, lng: app.y }
-			});
-
-			app.directionsDisplay.setMap(map);
-			app.directionsDisplay.setPanel(document.getElementById('right-panel'));
-
-			var control = document.getElementById('floating-panel');
-			// control.style.display = 'block';
-			map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-		};
-
-		app.calculateAndDisplayRoute = function () {
-			app.directionsService.route({
-				origin: app.start,
-				destination: app.end + ', Toronto',
-				travelMode: google.maps.TravelMode.TRANSIT
-			}, function (response, status) {
-				if (status === google.maps.DirectionsStatus.OK) {
-					app.directionsDisplay.setDirections(response);
-					//Call setInterval, store it in a var
-					// it will return an id that we need to clear
-					var interval = setInterval(function () {
-						//If selector gets something
-						if ($('.adp-directions').length > 0) {
-							//Clear the interval
-							clearInterval(interval);
-							//get train
-							app.getTrain();
-						}
-					}, 100);
-				} else {
-					window.alert('Directions request failed due to ' + status);
-				}
-			});
-		};
-	} else if (correctMap === 'WALKING') {
-		console.log('walking');
-
-		app.initMap = function () {
-			app.directionsService = new google.maps.DirectionsService();
-			app.directionsDisplay = new google.maps.DirectionsRenderer();
-			var map = new google.maps.Map(document.getElementById('new-map'), {
-				zoom: 15,
-				center: { lat: app.x, lng: app.y }
-			});
-
-			app.directionsDisplay.setMap(map);
-			app.directionsDisplay.setPanel(document.getElementById('left-panel'));
-
-			var control = document.getElementById('new-panel');
-			// control.style.display = 'block';
-			map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-		};
-
-		app.calculateAndDisplayRoute = function () {
-			app.directionsService.route({
-				origin: app.start,
-				destination: app.end + ', Toronto',
-				travelMode: google.maps.TravelMode.WALKING
-			}, function (response, status) {
-				if (status === google.maps.DirectionsStatus.OK) {
-					app.directionsDisplay.setDirections(response);
-					//Call setInterval, store it in a var
-					// it will return an id that we need to clear
-					var interval = setInterval(function () {
-						//If selector gets something
-						if ($('.adp-directions').length > 0) {
-							//Clear the interval
-							clearInterval(interval);
-							//get train
-							app.getTrain();
-						}
-					}, 100);
-				} else {
-					window.alert('Directions request failed due to ' + status);
-				}
-			});
-		};
-	}
+$('button.ttc').on('click', function () {
+	console.log('Transit button clicked');
+	app.travelMode = 'TRANSIT';
+	app.initMap();
+	app.calculateAndDisplayRoute();
+	$('.wholeMap').toggle();
+	$('div.viewMap').toggle();
+	// $('span.TTCminutes').text(app.nextTTC);
+	// $('span.ttcStop').text(app.chocolateIceCream);
+	console.log(app.chocolateIceCream);
+	console.log(app.nextTTC);
 });
 
 /////////////////////PSUEDO CODE/////////////////////

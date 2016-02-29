@@ -477,7 +477,7 @@ h6.credits {
 @media (max-width: 650px) {
   input[type=text] {
     color: RGB(52, 168, 149);
-    padding: 13px 40px;
+    padding: 13px 40px 13px 2px;
     width: 300px;
     text-transform: uppercase;
     letter-spacing: 0px;
@@ -503,7 +503,9 @@ h6.credits {
     height: auto; }
   #map {
     height: 40vh;
-    width: 90%; } }
+    width: 90%; }
+  button {
+    background: RGBA(76, 84, 84, 0.7); } }
 
 @media (max-width: 420px) {
   .window, .laterContent, .wholeMap {
@@ -515,6 +517,28 @@ h6.credits {
     .mapTitle .TTCminutes, .mapTitle .ttcStop, .mapTitle .walkTime, .mapTitleWalk .TTCminutes, .mapTitleWalk .ttcStop, .mapTitleWalk .walkTime {
       font-size: 2.3rem; } }
 
-@media (max-width: 320px) {
+@media (max-width: 385px) {
   input[type=text] {
-    width: 280px; } }
+    width: 280px; }
+  .title {
+    padding: 10px 0px 30px;
+    font-size: 2.5rem; }
+    .title h3 {
+      font-size: 2.5rem; }
+  .subTitle {
+    padding: 5px 0px 40px; }
+    .subTitle h2 {
+      font-size: 3.5rem; }
+    .subTitle h3 {
+      padding: 30px 30px;
+      font-size: 2.5rem; }
+  .weatherIcon {
+    width: 90px;
+    padding: 0px 0px 0px; }
+  p.feels, p.type {
+    font-size: 2rem;
+    padding: 0px 0px; }
+  .weatherIcon div {
+    padding: 5px 0px; }
+  h6 {
+    font-size: 0.5rem; } }

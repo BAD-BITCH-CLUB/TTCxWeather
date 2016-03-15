@@ -44,7 +44,6 @@ h1, h2, h3, h4, h5, h6, p {
 
 .wholeMap {
 	position: relative;
-
 }
 
 #map {
@@ -112,7 +111,7 @@ div.adp-warnbox{
 .window, .laterContent, .wholeMap {
 	border: none;
 	border-radius: 10px;	
-	height: 92vh;
+	height: 90vh;
 	display: flex;
 	flex-direction: column;
 	margin: 13px;
@@ -124,6 +123,14 @@ div.adp-warnbox{
 
 .laterContent{
 	background: $white;
+}
+
+.wholeMap, .laterContent {
+	.logo {
+		position: absolute;
+		left: 20px;
+		width: 50px;
+	}
 }
 
 .overlay{
@@ -202,7 +209,8 @@ input[type=text] {
 	padding: 20px 40px;
 	width: 600px;
 	text-transform: uppercase;
-	letter-spacing: 12px;
+	letter-spacing: 4px;
+	text-align: center;
 	&:focus, &:active{
 		border: none;
 		outline: none;
@@ -260,7 +268,13 @@ form {
 	padding: 14px 0px 20px;
 }
 
-
+.weatherInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: -40px;
+}
 
 h1  {
 	font-family: $title;
@@ -282,11 +296,20 @@ div.image {
 	width: 50px;
 }
 
-p.feels, p.type {
+p.type, span.weather {
 	font-size: 2.5rem;
 	font-family: $paragraph;
 	color: $teal;
 	padding: 5px 0px;
+}
+
+span.weather {
+	font-weight: 400;
+}
+
+span.feelsLikeAll {
+	color: $orange;
+	font-size: 2rem;
 }
 
 p.temp {
@@ -298,7 +321,7 @@ p.temp {
 
 .weatherIcon {
 	display: flex;
-    width: 90px;
+    width: 125px;
     padding: 14px 0px 0px;
 	div {
 		width: 100%;
@@ -330,7 +353,7 @@ button {
 	color: $white;
 	background: $teal;
 	border: none;
-	box-shadow: 4px 4px 0px darken($teal,15%);
+	box-shadow: 1px 4px 0px darken($teal,15%);
 	border-radius: 5px;
 	max-width: 400px;
 	width: calc(40% - 20px);
@@ -339,9 +362,10 @@ button {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	// transition: all 0.2s ease;
+	position: relative;
 	div.image {
   		width: 60px;
-
 	}
 	div.walkImg img{
 		width: 55px;
@@ -351,7 +375,9 @@ button {
 		padding: 0px 0px;
 	}
 	&:hover {
-		box-shadow: 2px 2px 0px darken($teal, 15%);
+		box-shadow: 1px 1px 0px darken($teal, 15%);
+		bottom: -3px;
+
 	}
 	h4{
 		padding: 0px 0px 0px 20px;
@@ -378,11 +404,11 @@ button.goBack{
 }
 
 footer {
+	padding: 15px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
-
 }
 
 h6 {
@@ -391,12 +417,22 @@ h6 {
 	letter-spacing: 6px;
 	padding: 0px;
 	margin: 0px;
+	font-size: 1.2rem;
+	border: 1px solid $teal;
 
 	a {
 		color: $white;
+		background: $grey;
+		border: 1px solid $teal;
+		border-radius: 5px; 
+		padding: 7px 7px 7px 10px;
+		margin: 10px 5px 5px 5px;
 		text-decoration: none;
+		transition: all 0.5s ease;
 		&:hover{
-			color:$orange;
+			border: 1px solid $white;
+			color: $white;
+			background: $teal;
 		}
 	img {
 		width: 60px;
@@ -411,6 +447,13 @@ h6.credits {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	border: none;
+	a {
+		border: none;
+		background: $teal;
+
+	}
+
 }
 
 
@@ -489,7 +532,7 @@ h6.credits {
 		    font-size: 2.5rem;
 		}
 	.weatherIcon {
-	    width: 90px;
+	    width: 125px;
 	    padding: 0px 0px 0px;
 	}
 	p.feels, p.type {

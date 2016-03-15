@@ -208,7 +208,7 @@ div.adp-warnbox {
 .window, .laterContent, .wholeMap {
   border: none;
   border-radius: 10px;
-  height: 92vh;
+  height: 90vh;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -222,6 +222,11 @@ div.adp-warnbox {
 
 .laterContent {
   background: #FFF5ED; }
+
+.wholeMap .logo, .laterContent .logo {
+  position: absolute;
+  left: 20px;
+  width: 50px; }
 
 .overlay {
   position: absolute;
@@ -300,7 +305,8 @@ input[type=text] {
   padding: 20px 40px;
   width: 600px;
   text-transform: uppercase;
-  letter-spacing: 12px; }
+  letter-spacing: 4px;
+  text-align: center; }
   input[type=text]:focus, input[type=text]:active {
     border: none;
     outline: none; }
@@ -356,6 +362,21 @@ form {
   width: 60px;
   padding: 14px 0px 20px; }
 
+.weatherInfo {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: -40px; }
+
 h1 {
   font-family: "Open Sans", sans-serif; }
 
@@ -371,11 +392,18 @@ h3 {
 div.image {
   width: 50px; }
 
-p.feels, p.type {
+p.type, span.weather {
   font-size: 2.5rem;
   font-family: "Open Sans", sans-serif;
   color: #3D9085;
   padding: 5px 0px; }
+
+span.weather {
+  font-weight: 400; }
+
+span.feelsLikeAll {
+  color: #F5744E;
+  font-size: 2rem; }
 
 p.temp {
   font-size: 4rem;
@@ -386,7 +414,7 @@ p.temp {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 90px;
+  width: 125px;
   padding: 14px 0px 0px; }
   .weatherIcon div {
     width: 100%;
@@ -418,7 +446,7 @@ button {
   color: #FFF5ED;
   background: #3D9085;
   border: none;
-  box-shadow: 4px 4px 0px #265a53;
+  box-shadow: 1px 4px 0px #265a53;
   border-radius: 5px;
   max-width: 400px;
   width: calc(40% - 20px);
@@ -434,7 +462,8 @@ button {
           justify-content: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  position: relative; }
   button div.image {
     width: 60px; }
   button div.walkImg img {
@@ -443,7 +472,8 @@ button {
   button div.streetCarImg img {
     padding: 0px 0px; }
   button:hover {
-    box-shadow: 2px 2px 0px #265a53; }
+    box-shadow: 1px 1px 0px #265a53;
+    bottom: -3px; }
   button h4 {
     padding: 0px 0px 0px 20px; }
 
@@ -464,6 +494,7 @@ button.goBack {
       outline: none; }
 
 footer {
+  padding: 15px;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -480,12 +511,22 @@ h6 {
   text-transform: uppercase;
   letter-spacing: 6px;
   padding: 0px;
-  margin: 0px; }
+  margin: 0px;
+  font-size: 1.2rem;
+  border: 1px solid #3D9085; }
   h6 a {
     color: #FFF5ED;
-    text-decoration: none; }
+    background: RGB(76, 84, 84);
+    border: 1px solid #3D9085;
+    border-radius: 5px;
+    padding: 7px 7px 7px 10px;
+    margin: 10px 5px 5px 5px;
+    text-decoration: none;
+    transition: all 0.5s ease; }
     h6 a:hover {
-      color: #F5744E; }
+      border: 1px solid #FFF5ED;
+      color: #FFF5ED;
+      background: #3D9085; }
     h6 a img {
       width: 60px; }
     h6 a img.googs {
@@ -500,7 +541,11 @@ h6.credits {
           flex-direction: row;
   -webkit-align-items: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  border: none; }
+  h6.credits a {
+    border: none;
+    background: #3D9085; }
 
 @media (max-width: 900px) {
   .subTitle {
@@ -567,7 +612,7 @@ h6.credits {
     padding: 30px 30px;
     font-size: 2.5rem; }
   .weatherIcon {
-    width: 90px;
+    width: 125px;
     padding: 0px 0px 0px; }
   p.feels, p.type {
     font-size: 2rem;

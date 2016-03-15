@@ -19,6 +19,9 @@ app.mode = '';
 $(function(){
  app.init();
  $('#end').val();
+ $('.mapOverlay').on('click', function(){
+ 	$(this).toggle();
+ });
 });
 
 app.init = function(){
@@ -371,6 +374,7 @@ $('button.walk').on('click', function(){
   $('.laterContent').toggle();
   $('div.viewMap').toggle();
   $('.wholeMap').toggle();
+  google.maps.event.trigger(map, 'resize');
   $('.mapTitle').toggle();
   $('.mapTitleWalk').toggle();
 	app.travelMode = 'WALKING'; 
@@ -379,7 +383,7 @@ $('button.walk').on('click', function(){
 })
 
 $('button.ttc').on('click', function(){
-app.mode = $(this).val();
+  app.mode = $(this).val();
   // console.log('Transit button clicked');
   // $('button.goBack').toggle();
   $('.laterContent').toggle();
@@ -388,6 +392,7 @@ app.mode = $(this).val();
   app.calculateAndDisplayRoute();
   $('.wholeMap').toggle();
   $('div.viewMap').toggle();
+  google.maps.event.trigger(map, 'resize');
 	// $('span.TTCminutes').text(app.nextTTC);
 	// $('span.ttcStop').text(app.chocolateIceCream);
 	// console.log(app.chocolateIceCream);

@@ -14,6 +14,7 @@ app.nextTTC ='';
 app.chocolateIceCream ='';
 app.travelMode = '';
 var timeblock = '';
+app.mode = '';
 
 $(function(){
  app.init();
@@ -26,7 +27,7 @@ app.init = function(){
 
 	$('form').on('submit', function(e) {
 		e.preventDefault();
-		console.log('yolo')
+		// console.log('yolo')
 
 		app.start = app.userLocation;
 		app.end = $('input#end').val();
@@ -67,7 +68,7 @@ app.getGeolocation = function(){
 
 app.getTimeforTTC = function(newTTCinfo){
 	var TTCVehicleURL = 'http://myttc.ca/vehicles/near/' + newTTCinfo + '.json';
-	console.log(TTCVehicleURL);
+	// console.log(TTCVehicleURL);
 	$.ajax({
 		url: TTCVehicleURL,
 		method: 'GET',
@@ -79,7 +80,7 @@ app.getTimeforTTC = function(newTTCinfo){
 		});
 			// console.log(vehicleInfo)
 			app.trainData = vehicleInfo;
-			console.log(vehicleInfo);
+			// console.log(vehicleInfo);
 	});
  };
 
@@ -88,12 +89,14 @@ app.getTrain = function() {
 	var pizza = $(item).find('span:last-child').text();
 
 
+
 	if (pizza.length > 0) {
 		var splitPizza = pizza.split('- ');
 		app.goodPizza = splitPizza[1];
 	}
 
-		timeblock = $('div.adp div.adp-summary span:last-child span').text()
+	timeblock = $('div.adp div.adp-summary span:last-child span').text()
+
 
   	
   	var timeSplit = timeblock.split('mins');
@@ -102,73 +105,69 @@ app.getTrain = function() {
 
 
   	var googleMapNextTrain = $('div.adp div:nth-child(3) div:nth-child(2) table.adp-directions tbody tr:nth-child(2) td.adp-substep div:nth-of-type(2) span:first-child span:first-child').text()
-  		console.log("next-train time:" + googleMapNextTrain);
+
+
 
   	var googleSPLIT = googleMapNextTrain.split('').reverse();
-  	console.log(googleSPLIT);
 
-  	//This is to clean up the time that the street car comes, so that we can have the math
-  	if (googleSPLIT[1] === 'p' ) {
-	  	var noPMstring = googleMapNextTrain.split('pm');
-			var noPM = noPMstring.join('');
-			console.log(noPM);	
-  	} else if (googleSPLIT[1] === 'a') {
-		var noAMstring = googleMapNextTrain.split('am');
-			var noPM = noAMstring.join('');
-			console.log(noAM);	
-  	} else {
+  	var noPM;
+  	if (app.mode === 'WALKING') {
+  		// app.initMap();
+  		// app.calculateAndDisplayRoute();	 
+  	} else if (app.mode === 'TRANSIT') {
+  		
+  		if (googleSPLIT[1] === 'p' ) {
+	  	// var noPMstring = googleMapNextTrain.split('pm');
+			noPM = googleMapNextTrain.split('pm').join('');
+  		} 	else if (googleSPLIT[1] === 'a') {
+		// var noAMstring = googleMapNextTrain.split('am');
+			noPM = googleMapNextTrain.split('am').join('');	
+  		} else {
   		alert('No results for train times found. Maybe you should just walk.');
+  		}
   	}
 
-  	var finalstring = noPM.split(':');
+
+  	var finalstring = 'hello';
+  	if (noPM !== undefined) {
+	  	finalstring = noPM.split(':');
+  	}
   	app.finalMinutes = (+finalstring[0]) * 60 + (+finalstring[1]);
-	//done talking about the streetcar time, for a second 
 
-		var goodTime = formatTime(new Date());
+	var goodTime = formatTime(new Date());
 
-		var splitTime = goodTime.split('').reverse();
-		console.log(splitTime);
+	var splitTime = goodTime.split('').reverse();
 
-		//This is to clean up the users time, so that we can do the math
-		if (splitTime[1] === 'a') {
-			var noPMUser = goodTime.split('am');
-		} else if (splitTime[1] === 'p') {
-				var noPMUser = goodTime.split('pm');
-		} else {
+	if (splitTime[1] === 'a') {
+		var noPMUser = goodTime.split('am');
+	} else if (splitTime[1] === 'p') {
+			var noPMUser = goodTime.split('pm');
+	} else {
 
-		}
+	}
 
-		var finalTime = noPMUser.join('');
-		console.log(finalTime);
+	var finalTime = noPMUser.join('');
 
-		var hm = finalTime;   // your input string
-		var a = hm.split(':'); // split it at the colons
+	var hm = finalTime;   // your input string
+	var a = hm.split(':'); // split it at the colons
 
-		// Hours are worth 60 minutes.
-		var currentMinutes = (+a[0]) * 60 + (+a[1]);
-		console.log(a);
+	// Hours are worth 60 minutes.
+	var currentMinutes = (+a[0]) * 60 + (+a[1]);
 
-		console.log(currentMinutes);
-		console.log(app.finalMinutes);
+	app.nextTTC = app.finalMinutes - currentMinutes;
 
-		app.nextTTC = app.finalMinutes - currentMinutes;
-		console.log('your next TTC arrives in ' + app.nextTTC);
+	var iceCream = $('div.adp div:nth-child(3) div:nth-child(2) table.adp-directions tbody tr:first-child td.adp-substep div:first-of-type span:nth-of-type(2)').text();
 
-		var iceCream = $('div.adp div:nth-child(3) div:nth-child(2) table.adp-directions tbody tr:first-child td.adp-substep div:first-of-type span:nth-of-type(2)').text();
-		console.log('this is your stop' + iceCream);
-		
-		var mintIceCream = iceCream.split('Walk to');
-		app.chocolateIceCream = mintIceCream.join(' ');
-		console.log('your stop is at' + app.chocolateIceCream);
+	var mintIceCream = iceCream.split('Walk to');
+	app.chocolateIceCream = mintIceCream.join(' ');
 
-		$('span.TTCminutes').text(app.nextTTC);
-	  $('span.ttcStop').text(app.chocolateIceCream);
+	$('span.TTCminutes').text(app.nextTTC);
+	$('span.ttcStop').text(app.chocolateIceCream);
 
-	  var hustleTime = $('div.adp div:nth-child(3) div.adp-summary span:nth-child(3)').text();
-	  console.log(hustleTime);
-	  $('span.walkTime').text(hustleTime);
+	var hustleTime = $('div.adp div:nth-child(3) div.adp-summary span:nth-child(3)').text();
+	$('span.walkTime').text(hustleTime);
 
-		app.bestTrain();
+	app.bestTrain();
 }
 
 app.bestTrain = function() {
@@ -190,21 +189,21 @@ app.bestTrain = function() {
 
 
 	});
-	app.longNames.forEach(function(val, i){
-		if(val.name === app.goodPizza){
-			app.userTrain(app.longNames[i]);
-		} else {
-			console.log('sorry!')
-		}
-	});
+	// app.longNames.forEach(function(val, i){
+	// 	if(val.name === app.goodPizza){
+	// 		app.userTrain(app.longNames[i]);
+	// 	} else {
+	// 		console.log('sorry!')
+	// 	}
+	// });
 }
 
 
 app.userTrain = function(theTrain) { 
-	console.log(theTrain.name)
-	console.log('velocity ' + theTrain.velo);
-	console.log('distance ' + theTrain.dist);
-	var time = Math.floor((theTrain.dist / theTrain.velo) /10);
+	// console.log(theTrain.name)
+	// console.log('velocity ' + theTrain.velo);
+	// console.log('distance ' + theTrain.dist);
+	// var time = Math.floor((theTrain.dist / theTrain.velo) /10);
 	console.log(time + ' Minutes away');
 	if (time < 0.5){
 		console.log('The train is approaching')
@@ -237,7 +236,8 @@ app.initMap = function() {
 }
 
 app.calculateAndDisplayRoute = function(){
-  console.log('CalculateAndDisplayRoute called, travel mode is: ' + app.travelMode);
+  // console.log('CalculateAndDisplayRoute called, travel mode is: ' + app.travelMode);
+
 	app.directionsService.route({
 		origin: app.start,
 		destination: app.end + ', Toronto',
@@ -253,6 +253,8 @@ app.calculateAndDisplayRoute = function(){
 				//Clear the interval
 				clearInterval(interval)
 				//get train
+				// console.log('cool runnings');
+				// debugger;
 				app.getTrain();
 			}
 		  },100);
@@ -281,7 +283,7 @@ app.getWeather = function(){
 		dataType: 'json'
 
 	}).then(function(info){
-		console.log(info);
+		// console.log(info);
 		app.displayWeather(info);
 	});
 }
@@ -309,7 +311,7 @@ $('#submit').on('click', function(){
 
 app.displayWeather = function(torontoWeather) {
 	var weatherInfo = torontoWeather.current_observation;
-	console.log(weatherInfo);
+	// console.log(weatherInfo);
 
 	$('span.weather').text(weatherInfo.weather);
 	$('span.temp_c').text(weatherInfo.temp_c);
@@ -363,7 +365,8 @@ var formatTime = (function () {
 
 
 $('button.walk').on('click', function(){
-  console.log('Walking button clicked');
+  app.mode = $(this).val();
+  // console.log(app.mode);
   // $('button.goBack').toggle();
   $('.laterContent').toggle();
   $('div.viewMap').toggle();
@@ -376,7 +379,8 @@ $('button.walk').on('click', function(){
 })
 
 $('button.ttc').on('click', function(){
-  console.log('Transit button clicked');
+app.mode = $(this).val();
+  // console.log('Transit button clicked');
   // $('button.goBack').toggle();
   $('.laterContent').toggle();
   app.travelMode = 'TRANSIT';
@@ -386,8 +390,8 @@ $('button.ttc').on('click', function(){
   $('div.viewMap').toggle();
 	// $('span.TTCminutes').text(app.nextTTC);
 	// $('span.ttcStop').text(app.chocolateIceCream);
-	console.log(app.chocolateIceCream);
-	console.log(app.nextTTC);
+	// console.log(app.chocolateIceCream);
+	// console.log(app.nextTTC);
 })
 
 $('button.goBack').on('click', function(){

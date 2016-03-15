@@ -98,24 +98,50 @@ app.getTrain = function () {
 	var googleMapNextTrain = $('div.adp div:nth-child(3) div:nth-child(2) table.adp-directions tbody tr:nth-child(2) td.adp-substep div:nth-of-type(2) span:first-child span:first-child').text();
 	console.log("next-train time:" + googleMapNextTrain);
 
-	var noPMstring = googleMapNextTrain.split('pm' || 'am');
-	var noPM = noPMstring.join('');
-	console.log(noPM);
+	var googleSPLIT = googleMapNextTrain.split('').reverse();
+	console.log(googleSPLIT);
+
+	//This is to clean up the time that the street car comes, so that we can have the math
+	if (googleSPLIT[1] === 'p') {
+		var noPMstring = googleMapNextTrain.split('pm');
+		var noPM = noPMstring.join('');
+		console.log(noPM);
+	} else if (googleSPLIT[1] === 'a') {
+		var noAMstring = googleMapNextTrain.split('am');
+		var noPM = noAMstring.join('');
+		console.log(noAM);
+	} else {
+		alert('No results for train times found. Maybe you should just walk.');
+	}
 
 	var finalstring = noPM.split(':');
 	app.finalMinutes = +finalstring[0] * 60 + +finalstring[1];
+	//done talking about the streetcar time, for a second
 
 	var goodTime = formatTime(new Date());
-	var splitTime = goodTime.split('pm' || 'am');
-	var finalTime = splitTime.join('');
+
+	var splitTime = goodTime.split('').reverse();
+	console.log(splitTime);
+
+	//This is to clean up the users time, so that we can do the math
+	if (splitTime[1] === 'a') {
+		var noPMUser = goodTime.split('am');
+	} else if (splitTime[1] === 'p') {
+		var noPMUser = goodTime.split('pm');
+	} else {}
+
+	var finalTime = noPMUser.join('');
+	console.log(finalTime);
 
 	var hm = finalTime; // your input string
 	var a = hm.split(':'); // split it at the colons
 
 	// Hours are worth 60 minutes.
 	var currentMinutes = +a[0] * 60 + +a[1];
+	console.log(a);
 
 	console.log(currentMinutes);
+	console.log(app.finalMinutes);
 
 	app.nextTTC = app.finalMinutes - currentMinutes;
 	console.log('your next TTC arrives in ' + app.nextTTC);

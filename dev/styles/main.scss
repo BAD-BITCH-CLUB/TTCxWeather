@@ -10,13 +10,13 @@ input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}b
 
 // Variables - colours
 $grey: RGB(76, 84, 84);
-$teal: RGB(52, 168, 149);
+$teal: #3D9085;
 $white: #FFF5ED;
 $white1: #FFFAF6;
-$orange: RGB(250, 115, 85);
+$orange: #F5744E;
 
 //Variables- fonts 
-$title: 'Roboto', sans-serif;
+$title: 'Open Sans', sans-serif;
 $paragraph: 'Open Sans', sans-serif; 
 
 html {
@@ -26,8 +26,8 @@ html {
 body {
 	font-size: 1.6rem;
 	font-family: $paragraph;
-	background: $teal
-	;
+	background: $teal;
+	font-weight: 300;
 }
 
 html, body {
@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6, p {
 	width: calc(50% - 40px);
 	float: left;
 	border-radius: 5px;
-	border: 4px solid $orange;
+	border: none;
 
 
 }
@@ -78,7 +78,7 @@ div.adp-warnbox{
     color: $grey;
     font-family: $paragraph;
     font-size: 2.3rem;
-    font-weight: bold;
+    font-weight: lighter;
     .TTCminutes, .ttcStop, .walkTime {
     	color: $orange;
     	font-size: 2.5rem;
@@ -105,17 +105,19 @@ div.adp-warnbox{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	position: relative;
+	z-index: 4;
 }
 
 .window, .laterContent, .wholeMap {
-	border: 5px solid $grey;
+	border: none;
 	border-radius: 10px;	
 	height: 92vh;
 	display: flex;
 	flex-direction: column;
 	margin: 13px;
 	margin-bottom: 5px;
-	background: $white1;
+	background: $white;
 	position: relative;
 }
 
@@ -124,7 +126,7 @@ div.adp-warnbox{
 	background: $white;
 }
 
-.laterContent .overlay{
+.overlay{
 	position: absolute;
 	background: rgba(255,255,255,0.5);
 	top: 0;
@@ -132,6 +134,8 @@ div.adp-warnbox{
 	left: 0;
 	right: 0;
 	z-index: 3;
+	border-radius: 10px;
+	border-bottom: 5px solid grey;
 }
 
 
@@ -144,13 +148,19 @@ div.adp-warnbox{
     z-index: 4;
 }
 
-
+.window, .laterContent {
+	background-image: url(../assets/skyline.svg);
+	background-position: center 110%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 
 
 .skyline {
 	position: absolute;
 	bottom: -1.7%;
 	width: 100%;
+	
 }
 
 
@@ -172,7 +182,8 @@ div.adp-warnbox{
 	align-items: center;
 	padding: 5px 0px 40px;
 	h2 {
-		font-size: 4.5rem;
+		font-size: 3.5rem;
+
 	}
 	h3 {
 	    padding: 40px 30px;
@@ -181,7 +192,7 @@ div.adp-warnbox{
 
 }
 input[type=submit], input[type=text] {
-	border: $grey 2px solid;
+	border: none;
 	width: 60px;
 	border-radius: 5px;
 }
@@ -193,7 +204,7 @@ input[type=text] {
 	text-transform: uppercase;
 	letter-spacing: 12px;
 	&:focus, &:active{
-		border: $orange 2px solid;
+		border: none;
 		outline: none;
 	}
 	&::placeholder {
@@ -208,7 +219,7 @@ input[type=text] {
 }
 
 input[type=text]:focus + input[type=submit] {
-	border: $orange 2px solid;
+	border: none;
 	border-left: none;
 	outline: none;
 }
@@ -309,48 +320,57 @@ p.temp {
 .buttons {
 	width: 100%;
 	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
+	flex-direction: column;
+	justify-content: center;
 	padding-top: 35px;
+	align-items: center;
 }
 
 button {
 	color: $white;
-	background: $grey;
+	background: $teal;
 	border: none;
+	box-shadow: 4px 4px 0px darken($teal,15%);
 	border-radius: 5px;
 	max-width: 400px;
-	width: calc(50% - 20px);
-	margin: 10px 5px 30px;
+	width: calc(40% - 20px);
+	margin: 0px 5px 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	div.image {
   		width: 60px;
-  		margin: 0 auto;
+
 	}
 	div.walkImg img{
 		width: 55px;
-		padding: 20px 0px;
+		padding: 15px 2px;
 	}
 	div.streetCarImg img{
-		padding: 6px 0px;
+		padding: 0px 0px;
 	}
 	&:hover {
-		background: $teal;
+		box-shadow: 2px 2px 0px darken($teal, 15%);
+	}
+	h4{
+		padding: 0px 0px 0px 20px;
 	}
 }
 
 button.goBack{
 	margin: 20px auto;
+	box-shadow: 4px 4px 0px darken($orange, 15%);
 	padding: 20px 0px;
 	display: block;
-	background: $white1;
-	border: 4px solid $grey;
-	color: $grey;
+	background: $orange;
+	border: none;
+	color: $white1;
 	width: 75%;
 	text-transform: uppercase;
 	letter-spacing: 6px;
 	&:hover{
-		background: $teal;
-		color: $white;
+		box-shadow: 2px 2px 0px darken($orange, 15%);
 		&:active, &:focus {
 			outline: none;
 		}
@@ -394,6 +414,17 @@ h6.credits {
 }
 
 
+@media (max-width: 900px) {
+	.subTitle {
+	margin: 0px 0px 0px;
+    padding: 0px 900px 45px;
+    background-image: radial-gradient(ellipse 500px 125px, RGBA(255, 250, 248, 1) 43%, RGBA(255, 250, 248, 0.1));
+	}
+    .window, .laterContent {
+		background-position: 80% 100%;
+	}
+}
+
 @media (max-width: 650px) {
 	input[type=text] {
     color: RGB(52, 168, 149);
@@ -405,7 +436,12 @@ h6.credits {
     &::placeholder {
     	letter-spacing: 8px;
     	text-align: center;
-    }
+    	}
+	}
+	.subTitle {
+	margin: 0px 0px 0px;
+    padding: 0px 0px 54px;
+    background-image: radial-gradient(ellipse 500px 94px,RGBA(255, 250, 248, 1) 48%, RGBA(255, 250, 248, 0.1));
 }
 }
 
@@ -421,9 +457,6 @@ h6.credits {
 		height: 40vh;
 		width:90%;
 	}
-	button {
-    	background: RGBA(76, 84, 84, 0.7);
-	}
 }
 
 @media (max-width: 420px){
@@ -438,8 +471,6 @@ h6.credits {
 	    	font-size: 2.3rem;
 	    }
     }
-
-
 }
 
 @media (max-width: 385px){
@@ -453,16 +484,10 @@ h6.credits {
 			font-size: 2.5rem;
 		}
 	}
-	.subTitle {
-		padding: 5px 0px 40px;
-		h2 {
-			font-size: 3.5rem;
-		}
-		h3 {
+		.subtitle h3 {
 		    padding: 30px 30px;
 		    font-size: 2.5rem;
 		}
-	}
 	.weatherIcon {
 	    width: 90px;
 	    padding: 0px 0px 0px;
